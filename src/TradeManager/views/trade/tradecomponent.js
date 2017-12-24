@@ -11,6 +11,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import areIntlLocalesSupported from 'intl-locales-supported';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import tradeCommandService from './../../services/tradeCommandService';
 
 class TradeComponent extends Component {
     constructor() {
@@ -59,14 +60,81 @@ class TradeComponent extends Component {
         return date.getDay() === 0 || date.getDay() === 6;
     }
 
+    isFloat(n){
+        return Number(n) === n && n % 1 !== 0;
+    }
+    
+    isValidData() {
+        let priceValue = this.refs.txtPrice.getValue();
+        let qValue = this.refs.txtQuantity.getValue();
+
+        if(isNaN(priceValue) || isNaN(qValue)) {
+            alert("Price and Quantity should contain valid value");
+            return false;
+        }
+
+        if(!Number.isInteger(parseFloat(qValue))) {
+            alert("Quantity should be an Integer");
+            return false;
+        }
+
+        if(parseFloat(priceValue) <= 0) {
+            alert("Price should be greater than 0");
+            return false;
+        }
+        
+        if(parseInt(qValue) <= 0) {
+            alert("Quantity should be greater than 0");
+            return false;
+        }
+
+        return true;
+    }
+
     handleClick(event) {
-        // console.log(this.refs.dtTradeFrom.refs.input.getValue());
-        // console.log(this.refs.dtTradeTo.refs.input.getValue());
-        // console.log(this.refs.ddlCommodity.state.value);
-        // console.log(this.refs.chkBuy.state.switched);
-        // console.log(this.refs.chkSell.state.switched);
-        // console.log(this.refs.ddlCP.state.value);
-        // console.log(this.refs.ddlLocation.state.value);
+
+        if(!this.isValidData()) return;
+
+        let priceValue = this.refs.txtPrice.getValue();
+        let qValue = this.refs.txtQuantity.getValue();
+
+        let tradeBody = {
+            "commodity": this.refs.ddlCommodity.state.value,
+            "side": this.refs.rbBuySell.state.selected,
+            "price": parseFloat(priceValue),
+            "quantity": parseInt(qValue),
+            "counterparty": this.refs.ddlCP.state.value,
+            "location": this.refs.ddlLocation.state.value,
+            "status": "OPEN",
+            "tradeDate": "2017-12-22T" + "00:00:00.000Z"
+        };
+
+        console.log(tradeBody);
+
+        tradeCommandService
+        .createNewTrade(tradeBody)
+        .then(createdTradeData => {
+            console.log("Trade created -> ", createdTradeData);
+
+            let newTradeId = createdTradeData.tradeId; 
+
+            tradeBody["quantity"] += 50; 
+
+            tradeCommandService
+            .updateTrade(newTradeId, tradeBody)
+            .then(resTradeData => {
+                console.log("Trade updated with + 50 quanity -> ", resTradeData);
+
+                // tradeCommandService
+                // .deleteTrade(newTradeId)
+                // .then(resTradeData => {
+                //     console.log("Trade deleted!", resTradeData);
+                // });
+                    
+            });
+                
+        });
+        
     }
 
 
@@ -185,9 +253,10 @@ class TradeComponent extends Component {
                                     <td style={colStyle}>Price</td>
                                     <td>
                                         <TextField
+                                        ref="txtPrice"
+                                        defaultValue={this.state.price}
                                         hintText="Enter Price"
                                         errorText="This field is required"
-                                        value={this.state.price}
                                         />
                                     </td>
                                 </tr>
@@ -195,9 +264,10 @@ class TradeComponent extends Component {
                                     <td style={colStyle}>Quantity</td>
                                     <td>
                                     <TextField
+                                        ref="txtQuantity"
+                                        defaultValue={this.state.price}
                                         hintText="Enter Quantity"
                                         errorText="This field is required"
-                                        value={this.state.quantity}
                                         />
                                     </td>
                                 </tr>

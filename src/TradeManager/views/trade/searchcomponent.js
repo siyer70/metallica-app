@@ -7,6 +7,9 @@ import MenuItem from 'material-ui/MenuItem';
 import areIntlLocalesSupported from 'intl-locales-supported';
 import Checkbox from 'material-ui/Checkbox';
 import css from './searchcomponent.css';
+import tradeQueryService from '../../services/tradeQueryService';
+
+const moment = require('moment');
 
 class SearchComponent extends Component {
 
@@ -42,14 +45,50 @@ class SearchComponent extends Component {
         return date.getDay() === 0 || date.getDay() === 6;
     }
 
+    getBuySellSelection() {
+        let a = this.refs.chkBuy.state.switched;
+        let b = this.refs.chkSell.state.switched;
+
+        let buySell = ((a && b) || (!a && !b))?'ALL':undefined;
+        
+        if(!buySell)
+            buySell = (a)?'Buy':'Sell';
+
+        return buySell;
+    }
+
     handleClick(event) {
-        console.log(this.refs.dtTradeFrom.refs.input.getValue());
-        console.log(this.refs.dtTradeTo.refs.input.getValue());
-        console.log(this.refs.ddlCommodity.state.value);
-        console.log(this.refs.chkBuy.state.switched);
-        console.log(this.refs.chkSell.state.switched);
-        console.log(this.refs.ddlCP.state.value);
-        console.log(this.refs.ddlLocation.state.value);
+        // sample calls 
+		// tradeQueryService
+		// 	.loadTrades()
+        //     .then(trades => console.log(trades));
+
+        // convert from en-GB to API expected format YYYY-MM-DD
+        let dtRange = [
+            moment(this.refs.dtTradeFrom.refs.input.getValue(), 
+                        "DD/MM/YYYY").format("YYYYMMDD"),
+            moment(this.refs.dtTradeTo.refs.input.getValue(), 
+                        "DD/MM/YYYY").format("YYYYMMDD")
+        ].join();
+
+        let qp = [
+            dtRange,
+            this.refs.ddlCommodity.state.value,
+            this.getBuySellSelection(),
+            this.refs.ddlCP.state.value,
+            this.refs.ddlLocation.state.value
+        ].join('/');
+        
+        console.log(qp);
+
+        tradeQueryService
+        .queryTrades(qp)
+        .then(trades => console.log(trades));
+
+        tradeQueryService
+        .queryTrade(24)
+        .then(trade => console.log(trade));
+            
     }
 
     render() {
