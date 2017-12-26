@@ -94,7 +94,6 @@ export default class TradeEditComponent extends Component {
         let priceValue = this.refs.txtPrice.getValue();
         let qValue = this.refs.txtQuantity.getValue();
 
-
         let tradeBody = {
             "commodity": this.refs.ddlCommodity.state.value,
             "side": this.refs.rbBuySell.state.selected,
@@ -109,12 +108,11 @@ export default class TradeEditComponent extends Component {
 
         console.log(tradeBody);
 
-        this.props.createNewTrade(tradeBody);
-        
-    }
+        (this.props.isNewTrade) 
+            ? this.props.createNewTrade(tradeBody) 
+            : this.props.updateTrade(this.state.tradeId, tradeBody);
 
-    handleCancelClick(event) {
-        this.setState({editMode:false});
+        this.props.handlePostSaveClick();
     }
 
     handleOnChangeTradeDate(event, date) {
@@ -223,7 +221,7 @@ export default class TradeEditComponent extends Component {
                             </tr>
                             <tr>
                                 <td colSpan="2" width="100%" style={{textAlign:'right'}}>
-                                    <RaisedButton labelStyle = {contentStyle} label="Cancel" secondary={true} onClick={this.handleCancelClick.bind(this)} style={{marginRight:"15px"}}/>
+                                    <RaisedButton labelStyle = {contentStyle} label="Cancel" secondary={true} onClick={this.props.handleCancelClick} style={{marginRight:"15px"}}/>
                                     <RaisedButton labelStyle = {contentStyle} label="Save" primary={true} onClick={this.handleSaveClick.bind(this)}/>
                                 </td>
                             </tr>

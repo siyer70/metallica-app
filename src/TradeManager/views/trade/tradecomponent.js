@@ -12,18 +12,40 @@ class TradeComponent extends Component {
         super();
 
         this.state = {
-            editMode : true,
+            editMode : false,
             isNewTrade : false,
         }
 
     }
 
+    handleNewButtonClick() {
+        this.setState({editMode:true, isNewTrade:true});
+    }
+
     handleEditClick(event) {
-        this.setState({editMode:true});
+        let tradeId = this.props.activeTrade.tradeBody.tradeId;
+        if(tradeId && tradeId !== "0") {
+            this.setState({editMode:true, isNewTrade:false});
+        } else {
+            alert("Select a trade from the left panel and click edit");
+        }
     }
 
     handleDeleteClick(event) {
-        console.log("Delete clicked");
+        let tradeId = this.props.activeTrade.tradeBody.tradeId;
+        if(tradeId && tradeId !== "0") {
+            let yes = confirm("Do you want to delete this trade - Are you sure?");
+            if(yes) this.props.deleteTrade(this.props.activeTrade.tradeBody.tradeId);
+        }
+    }
+
+    handlePostSaveClick() {
+        this.setState({editMode:false, isNewTrade:false});
+    }
+
+    handleCancelClick() {
+        let yes = confirm("Your changes to this trade will be lost - Proceed?");
+        if(yes) this.setState({editMode:false, isNewTrade:false});
     }
 
     fillDefaultValues() {
@@ -40,7 +62,7 @@ class TradeComponent extends Component {
     }
  
     render() {
-        let {tradeBody} = this.props.activeTrade; 
+        let {tradeBody} = (this.state.isNewTrade) ? {tradeBody:{}} : this.props.activeTrade; 
         let {createNewTrade, updateTrade, deleteTrade} = this.props;                
 
         if(!tradeBody.tradeId) {
@@ -67,8 +89,11 @@ class TradeComponent extends Component {
                 </div>
  
                 <div style={card2style}>
-                    <TradeEditComponent key={tradeBody.tradeId} {...{tradeBody, createNewTrade, 
-                                updateTrade, deleteTrade}} />
+                    <TradeEditComponent key={tradeBody.tradeId}
+                            isNewTrade={this.state.isNewTrade}
+                            handlePostSaveClick={this.handlePostSaveClick.bind(this)}
+                            handleCancelClick={this.handleCancelClick.bind(this)} 
+                            {...{tradeBody, createNewTrade, updateTrade, deleteTrade}} />
                 </div>
             </div>
         );

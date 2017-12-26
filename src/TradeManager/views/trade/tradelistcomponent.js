@@ -25,8 +25,8 @@ class TradeListComponent extends Component {
     }
 
     handleDeleteRowClick(event) {
-        console.log("Trade delete called for ", event.currentTarget.parentNode.dataset.tradeId);
-        this.props.deleteTrade(event.currentTarget.parentNode.dataset.tradeId);
+        let yes = confirm("Do you want to delete this trade - Are you sure?");
+        if(yes) this.props.deleteTrade(event.currentTarget.parentNode.dataset.tradeId);
     }
 
     isSelected = (index) => {
@@ -43,12 +43,6 @@ class TradeListComponent extends Component {
             this.props.setActiveTrade(tradeId, this.props.trades[tradeId]);
         }
     };
-
-//     handleCellClick(row, col, event) {
-//         console.log("Row, col", row, col);
-// //      console.log(event.target.parentNode);
-//         console.log(event.currentTarget.dataset);
-//     }
 
     render() {
         this.tradeList = Object.keys(this.props.trades).map((key, index) => this.props.trades[key]); 
@@ -96,7 +90,8 @@ class TradeListComponent extends Component {
                                 <TableRowColumn colSpan="6">
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    <FloatingActionButton mini={true} secondary={true}>
+                                    <FloatingActionButton mini={true} secondary={true} 
+                                            onClick={this.props.handleNewTradeRequest}>
                                         <ContentAdd />
                                     </FloatingActionButton>
                                 </TableRowColumn>
