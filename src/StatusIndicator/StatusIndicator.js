@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import LinearProgress from 'material-ui/LinearProgress';
 
 class StatusIndicator extends Component{
 	render(){
-		let status = this.props.status.loading ? <span>Loading..!</span> : <span></span>;
+		let status = this.props.status.loading 
+			? <span><LinearProgress mode="indeterminate" /></span> 
+			: <span></span>;
 		return (
-			<div>
+			<div style={{marginBottom:"3px"}}>
 				{status}
 			</div>
 		);

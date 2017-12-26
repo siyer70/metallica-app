@@ -7,9 +7,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as tradeActions from './actions';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
@@ -24,8 +21,6 @@ const styles = {
     paddingTop: 0,
   },
 };
-
-const muiTheme = getMuiTheme(lightBaseTheme);
 
 class TradeManager extends Component {
   constructor(props, context) {
@@ -47,7 +42,6 @@ class TradeManager extends Component {
     let titleStyle = {fontSize: "16px"};
     let contentStyle = {fontSize: "16px", color:"#ffffff"};
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
           <AppBar
               title={title}
@@ -57,7 +51,6 @@ class TradeManager extends Component {
           <TickerComponent />
           <FeatureTabs {...this.props}/>
         </div>
-      </MuiThemeProvider>
     );
   }
 }
