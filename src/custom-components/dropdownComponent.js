@@ -10,13 +10,13 @@ export default class DropDownListComponent extends Component {
     constructor(properties) {
         super(properties);
         this.state = {
-            value : properties.defaultValue,
-            items: properties.items,
+            value : this.props.defaultValue,
+            items: this.props.items,
         };
     }
  
     handleChange = (event, index, value) => {
-    this.setState({value});
+        this.setState({value});
     };
 
     render() {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Card, CardText, CardActions} from 'material-ui/Card';
+import EventHandler from './../../eventhandlers/EventHandler';
 
 class TickerComponent extends Component {
     constructor() {
@@ -9,6 +10,21 @@ class TickerComponent extends Component {
         this.tickers['CU'] = {code:"CU",name:"Copper",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:6595.02};
         this.tickers['ZN'] = {code:"ZN",name:"Zinc",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:3092.64};
         this.tickers['AL'] = {code:"AL",name:"Aluminium",date:"2017-12-21T13:37:08.605Z",unit:"1 ",currency:"USD",price:2010.53};
+        this.eventHandler = new EventHandler();
+    }
+
+	componentDidMount(){
+        this.eventHandler.listenForMarketDataEvents(
+            this.marketDataEventCallback, this);
+    }
+
+    marketDataEventCallback(data, source) {
+        let marketDataInJSON = JSON.parse(data);
+        let cp = parseFloat(source.refs[marketDataInJSON.code].innerHTML);
+        let np = parseFloat(marketDataInJSON.price);
+        let forecolor = (np>=cp)?"#008000":"#ff0000";
+        source.refs[marketDataInJSON.code].innerHTML = marketDataInJSON.price;
+        source.refs[marketDataInJSON.code].style.color = forecolor;
     }
 
     render() {
@@ -36,7 +52,7 @@ class TickerComponent extends Component {
                                 <tr style={tblRowStyle}>
                                 {
                                     Object.keys(this.tickers).map((key, index) => (
-                                        <td style={tblColStyle} key={key}>{this.tickers[key].price}</td>
+                                        <td style={tblColStyle} key={key}><label ref={key}>{this.tickers[key].price}</label></td>
                                     ))
                                 }
                                 </tr>

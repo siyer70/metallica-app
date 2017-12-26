@@ -13,8 +13,8 @@ const moment = require('moment');
 
 class SearchComponent extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         if (areIntlLocalesSupported(['en-GB']))
             this.DateTimeFormat = global.Intl.DateTimeFormat;
@@ -41,6 +41,10 @@ class SearchComponent extends Component {
         this.locationItems.push(<MenuItem value={'SGP'} key={'SGP'} primaryText="Singapore" />);
     }
 
+	componentDidMount(){
+        this.queryTradesBasedOnCurrentCriteria();
+    }
+    
     disableWeekends(date) {
         return date.getDay() === 0 || date.getDay() === 6;
     }
@@ -57,11 +61,8 @@ class SearchComponent extends Component {
         return buySell;
     }
 
-    handleClick(event) {
-        // sample calls 
-		// tradeQueryService
-		// 	.loadTrades()
-        //     .then(trades => console.log(trades));
+    queryTradesBasedOnCurrentCriteria() {
+        let {loadTrades, queryTrades} = this.props;
 
         // convert from en-GB to API expected format YYYY-MM-DD
         let dtRange = [
@@ -81,18 +82,14 @@ class SearchComponent extends Component {
         
         console.log(qp);
 
-        tradeQueryService
-        .queryTrades(qp)
-        .then(trades => console.log(trades));
+        queryTrades(qp);
+    }
 
-        tradeQueryService
-        .queryTrade(24)
-        .then(trade => console.log(trade));
-            
+    handleClick(event) {
+        this.queryTradesBasedOnCurrentCriteria();
     }
 
     render() {
-        console.log(css);
         let daterangeStyle = {fontSize: "12px", width: "175px"};
         let contentStyle = {fontSize: "12px"};
         let headerStyle = {fontSize: "12px", textAlign:'left'};

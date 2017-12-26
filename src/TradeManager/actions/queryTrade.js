@@ -1,19 +1,18 @@
 import tradeQueryService from '../services/tradeQueryService';
-function queryTrades(queryParams){
+function queryTrade(queryParams){
 	return function(dispatch){
 		dispatch({
 			type : 'LOADING'
 		});
 		tradeQueryService
-			.queryTrades(queryParams)
-			.then(trades => {
-				return dispatch({
+			.queryTrade(tradeId)
+			.then(trade => dispatch({
 				type : 'LOADED',
-				payload : trades
-			})})
+				payload : trade
+			}))
 			.then(() => dispatch({ 
 				type : 'DONE'
 			}));
 	}
 }
-export default queryTrades;
+export default queryTrade;
