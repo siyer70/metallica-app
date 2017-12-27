@@ -5,13 +5,12 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as tradeActions from './actions';
-
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
+import * as tradeActions from './actions';
+
+import PageHeader from './../common/header';
+import StatusIndicator from './../StatusIndicator/StatusIndicator';
 import TickerComponent from './views/trade/tickercomponent';
 import FeatureTabs from './views/trade/tabs';
 
@@ -34,20 +33,10 @@ class TradeManager extends Component {
   }
 
   render() {
-    // let {trades, createNewTrade, 
-    //   updateTrade, deleteTrade, loadTrades, 
-    //   queryTrades, queryTrade, setActiveTrade} = this.props;
-    
-    let title = `Metallica Application Version ${this.state.version} - Environment: ${process.env.NODE_ENV || 'development'}`;
-    let titleStyle = {fontSize: "16px"};
-    let contentStyle = {fontSize: "16px", color:"#ffffff"};
     return (
         <div style={styles.container}>
-          <AppBar
-              title={title}
-              titleStyle={titleStyle}
-              iconElementRight={<div><span style={contentStyle}>User: {this.state.currentUser}</span><IconButton><AccountCircle /></IconButton></div>}
-              />
+          <StatusIndicator />
+          <PageHeader />
           <TickerComponent />
           <FeatureTabs {...this.props}/>
         </div>

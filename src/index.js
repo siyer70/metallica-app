@@ -9,7 +9,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import appStore from './store';
 import TradeManager from './TradeManager/TradeManager'; 
-import StatusIndicator from './StatusIndicator/StatusIndicator';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -21,10 +20,7 @@ const muiTheme = getMuiTheme(lightBaseTheme);
 render(
     <Provider store={appStore}>
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-            <StatusIndicator />
-            <TradeManager />
-        </div> 
+          <TradeManager />
       </MuiThemeProvider>
     </Provider>, 
     document.getElementById('app')
