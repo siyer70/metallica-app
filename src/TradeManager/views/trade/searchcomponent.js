@@ -6,8 +6,6 @@ import DropDownListComponent from './../../../custom-components/dropdownComponen
 import MenuItem from 'material-ui/MenuItem';
 import areIntlLocalesSupported from 'intl-locales-supported';
 import Checkbox from 'material-ui/Checkbox';
-import css from './searchcomponent.css';
-import tradeQueryService from '../../services/tradeQueryService';
 
 const moment = require('moment');
 

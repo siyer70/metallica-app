@@ -54,8 +54,11 @@ const config = {
               modules: true,
               localIdentName: '[name]__[local]___[hash:base64:5]'
             }
-          }
-        ])
+          },
+          {
+            test: /\.json$/,
+            loader: 'json-loader'
+          }        ])
       },
     ],
   },

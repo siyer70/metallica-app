@@ -1,7 +1,10 @@
-require('./../../common/config');
-let apiGatewayServiceUrl = process.env.API_GATEWAY_URL;
-let tradeQueryServiceBaseUrl = process.env.TRADE_QUERY_SERVICE_BASE_URL;
-let tradeQueryServicePrefix = process.env.TRADE_QUERY_SERVICE_PREFIX;
+import myprocess from './../../common/config';
+console.log(myprocess.env);
+let apiGatewayServiceUrl = myprocess.env.API_GATEWAY_URL;
+let tradeQueryServiceBaseUrl = myprocess.env.TRADE_QUERY_SERVICE_BASE_URL;
+let tradeQueryServicePrefix = myprocess.env.TRADE_QUERY_SERVICE_PREFIX;
+
+console.log("Gateway url is:", apiGatewayServiceUrl);
 
 function loadTrades() {
     let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix;

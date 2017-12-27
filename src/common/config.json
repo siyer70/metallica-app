@@ -12,5 +12,12 @@
     "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
     "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",
     "TRADE_COMMAND_SERVICE_PREFIX" : "/trades"
+  },
+  "production" : {
+    "API_GATEWAY_URL" : "http://dlusshek273879.sapient.com:8765",
+    "TRADE_QUERY_SERVICE_BASE_URL" : "/services/tradeservice",
+    "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
+    "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",
+    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades"
   }
 }

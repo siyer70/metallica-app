@@ -1,8 +1,8 @@
-require('./../../common/config');
+import myprocess from './../../common/config';
 
-let apiGatewayServiceUrl = process.env.API_GATEWAY_URL;
-let tradeCommandServiceBaseUrl = process.env.TRADE_COMMAND_SERVICE_BASE_URL;
-let tradeCommandServicePrefix = process.env.TRADE_COMMAND_SERVICE_PREFIX;
+let apiGatewayServiceUrl = myprocess.env.API_GATEWAY_URL;
+let tradeCommandServiceBaseUrl = myprocess.env.TRADE_COMMAND_SERVICE_BASE_URL;
+let tradeCommandServicePrefix = myprocess.env.TRADE_COMMAND_SERVICE_PREFIX;
 
 function createNewTrade(tradeBody) {
     let url = apiGatewayServiceUrl+tradeCommandServiceBaseUrl+tradeCommandServicePrefix;
