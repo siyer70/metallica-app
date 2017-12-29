@@ -5,6 +5,10 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
 import * as tradeActions from './actions';
@@ -26,20 +30,23 @@ class TradeManager extends Component {
     super(props, context);
 
     this.state = {
-      open : false,
       version : "1.0",
       currentUser : "schandrasekhar@sapient.com"
     };
+
+    this.muiTheme = getMuiTheme(lightBaseTheme);
   }
 
   render() {
     return (
+      <MuiThemeProvider muiTheme={this.muiTheme}>
         <div style={styles.container}>
           <StatusIndicator />
           <PageHeader />
           <TickerComponent />
           <FeatureTabs {...this.props}/>
         </div>
+      </MuiThemeProvider>
     );
   }
 }

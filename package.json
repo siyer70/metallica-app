@@ -20,6 +20,7 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
+    "history": "^4.7.2",
     "intl": "^1.2.5",
     "intl-locales-supported": "^1.0.0",
     "material-ui": "latest",
@@ -27,6 +28,7 @@
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.6",
+    "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.0.17",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",

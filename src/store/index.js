@@ -1,12 +1,23 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import {tradesReducer, activeTradeReducer, statusReducer} from '../reducers';
+import createHistory from 'history/createBrowserHistory'
+import { routerReducer, routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk';
+
+import {tradesReducer, activeTradeReducer, statusReducer} from '../reducers';
 
 let allReducers = combineReducers({
     trades : tradesReducer,
     activeTrade : activeTradeReducer,
-	status : statusReducer
+	status : statusReducer,
+	router: routerReducer
 });
+
+// Create a history of your choosing (we're using a browser history in this case)
+const history = createHistory();
+
+// Build the middleware for intercepting and dispatching navigation actions
+const routermiddleware = routerMiddleware(history);
+const middlewares = [thunk, routermiddleware];
 
 function logger({dispatch, getState}){
 	return function(next){
@@ -20,6 +31,6 @@ function logger({dispatch, getState}){
 	}
 }
 
-let appStore = createStore(allReducers, applyMiddleware(thunk));
+let appStore = createStore(allReducers, applyMiddleware(...middlewares));
 
-export default appStore;
+export default {appStore, history};

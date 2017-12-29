@@ -39,7 +39,6 @@ class TradeListComponent extends Component {
         });
         if(selectedRows.length>0) {
             let tradeId = this.tradeList[selectedRows[0]].tradeId;
-            console.log(tradeId, this.props.trades[tradeId]);
             this.props.setActiveTrade(tradeId, this.props.trades[tradeId]);
         }
     };

@@ -10,7 +10,6 @@ const myprocess = {env:{}};
     myprocess.env[key] = envConfig[key];
   });
 
-  console.log(myprocess.env);
 //}
 
 export default myprocess;
