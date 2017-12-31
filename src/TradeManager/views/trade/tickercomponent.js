@@ -14,8 +14,12 @@ class TickerComponent extends Component {
     }
 
 	componentDidMount(){
-        this.eventHandler.listenForMarketDataEvents(
+        this.eventHandler.subscribeForMarketDataEvents(
             this.marketDataEventCallback, this);
+    }
+
+    componentWillUnmount() {
+        this.eventHandler.unsubscribeForMarketDataEvents();
     }
 
     marketDataEventCallback(data, source) {

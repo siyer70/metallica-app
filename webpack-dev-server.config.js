@@ -19,6 +19,7 @@ const config = {
     inline: true,
     port: 3000, // Port Number
     host: 'localhost', // Change to '0.0.0.0' for external facing server
+    historyApiFallback: true
   },
   devtool: 'eval',
   output: {
@@ -54,11 +55,8 @@ const config = {
               modules: true,
               localIdentName: '[name]__[local]___[hash:base64:5]'
             }
-          },
-          {
-            test: /\.json$/,
-            loader: 'json-loader'
-          }        ])
+          }
+        ])
       },
     ],
   },
