@@ -2,9 +2,23 @@ import React, {Component} from 'react';
 import {Card, CardText} from 'material-ui/Card';
 const moment = require('moment');
 
-const TradeViewComponent = ({tradeBody}) => {
+const TradeViewComponent = ({tradeBody, refdata}) => {
     let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ");
 
+    let thisTrade = {...tradeBody};
+
+    thisTrade.commodity = (Object.keys(refdata.commodities).length>0)
+        ? refdata.commodities[tradeBody.commodity].description 
+        : tradeBody.commodity;
+
+    thisTrade.location = (Object.keys(refdata.locations).length>0)
+        ? refdata.locations[tradeBody.location].description 
+        : tradeBody.location;
+    
+    thisTrade.counterparty = (Object.keys(refdata.counterparties).length>0)
+        ? refdata.counterparties[tradeBody.counterparty].description 
+        : tradeBody.counterparty;
+    
     let title = "Trade ID: " + tradeBody.tradeId;
     let contentStyle = {fontSize: "14px"};
     let titleStyle = {fontSize: "12px", color:"#000000", fontWeight: 'bold'};
@@ -22,11 +36,11 @@ const TradeViewComponent = ({tradeBody}) => {
                         </tr>
                         <tr style={rowStyle}>
                             <td style={colStyle}>Commodity</td>
-                            <td>{tradeBody.commodity}</td>
+                            <td>{thisTrade.commodity}</td>
                         </tr>
                         <tr style={rowStyle}>
                             <td style={colStyle}>Side</td>
-                            <td>{tradeBody.side}</td>
+                            <td>{thisTrade.side}</td>
                         </tr>
                         <tr style={rowStyle}>
                             <td style={colStyle}>Counterparty</td>
@@ -42,7 +56,7 @@ const TradeViewComponent = ({tradeBody}) => {
                         </tr>
                         <tr style={rowStyle}>
                             <td style={colStyle}>Location</td>
-                            <td>{tradeBody.location}</td>
+                            <td>{thisTrade.location}</td>
                         </tr>
                     </tbody>
                 </table>

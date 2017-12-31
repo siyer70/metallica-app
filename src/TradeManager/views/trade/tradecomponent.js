@@ -85,14 +85,16 @@ class TradeComponent extends Component {
                     iconElementRight={<div><IconButton ref="btnEdit" disabled={this.state.editMode} onClick={this.handleEditClick.bind(this)}><ContentCreate /></IconButton><IconButton ref="btnDelete" disabled={this.state.editMode} onClick={this.handleDeleteClick.bind(this)}><ActionDelete /></IconButton></div>}
                 />
                 <div style={card1style}>
-                    <TradeViewComponent key={tradeBody.tradeId} tradeBody={tradeBody} />
+                    <TradeViewComponent key={tradeBody.tradeId} tradeBody={tradeBody} 
+                            refdata = {this.props.refdata} />
                 </div>
  
                 <div style={card2style}>
                     <TradeEditComponent key={tradeBody.tradeId}
                             isNewTrade={this.state.isNewTrade}
                             handlePostSaveClick={this.handlePostSaveClick.bind(this)}
-                            handleCancelClick={this.handleCancelClick.bind(this)} 
+                            handleCancelClick={this.handleCancelClick.bind(this)}
+                            refdata = {this.props.refdata} 
                             {...{tradeBody, createNewTrade, updateTrade, deleteTrade}} />
                 </div>
             </div>

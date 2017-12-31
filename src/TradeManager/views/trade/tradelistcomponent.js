@@ -46,18 +46,24 @@ class TradeListComponent extends Component {
 
     render() {
         this.tradeList = Object.keys(this.props.trades).map((key, index) => {
-            let tradeBody = this.props.trades[key];
+            let tradeBody = {...this.props.trades[key]};
             let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("DD/MM/YYYY");
             tradeBody.tradeDate = tradeDate;
-            tradeBody.commodity = (Object.keys(this.props.refdata.commodities).length>0)
-                                        ? this.props.refdata.commodities[tradeBody.commodity].description 
+
+            let commodityRow = this.props.refdata.commodities[tradeBody.commodity];        
+            tradeBody.commodity = (commodityRow)
+                                        ? commodityRow.description 
                                         : tradeBody.commodity;
-            tradeBody.location = (Object.keys(this.props.refdata.locations).length>0)
-                                        ? this.props.refdata.locations[tradeBody.location].description 
-                                        : tradeBody.location;
-            tradeBody.counterparty = (Object.keys(this.props.refdata.counterparties).length>0)
-                                        ? this.props.refdata.counterparties[tradeBody.counterparty].description 
-                                        : tradeBody.counterparty;
+            
+            let locationRow = this.props.refdata.locations[tradeBody.location];
+            tradeBody.location = (locationRow)
+                ? locationRow.description 
+                : tradeBody.location;
+
+            let cpRow = this.props.refdata.counterparties[tradeBody.counterparty];
+            tradeBody.counterparty = (cpRow)
+                ? cpRow.description 
+                : tradeBody.counterparty;
             return tradeBody;
         }); 
         let tblColHeadStyle = {textAlign:'left', backgroundColor:"#F5F5F5", color:'#000000', fontWeight:'bold'};

@@ -35,21 +35,22 @@ export default class TradeEditComponent extends Component {
         }
 
         this.commodityItems = [];
-        this.commodityItems.push(<MenuItem value={'AL'} key={'AL'} primaryText="Aluminium" />);
-        this.commodityItems.push(<MenuItem value={'ZN'} key={'ZN'} primaryText="Zinc" />);
-        this.commodityItems.push(<MenuItem value={'CU'} key={'CU'} primaryText="Copper" />);
-        this.commodityItems.push(<MenuItem value={'AU'} key={'AU'} primaryText="Gold" />);
-        this.commodityItems.push(<MenuItem value={'AG'} key={'AG'} primaryText="Silver" />);
-
-        this.cpItems = [];
-        this.cpItems.push(<MenuItem value={'ABCL'} key={'ABCL'} primaryText="ABCL" />);
-        this.cpItems.push(<MenuItem value={'AAPL'} key={'AAPL'} primaryText="Apple" />);
-        this.cpItems.push(<MenuItem value={'INFY'} key={'INFY'} primaryText="Infosys" />);
+        Object.keys(this.props.refdata.commodities).forEach(key => {
+            let commodity = this.props.refdata.commodities[key];
+            this.commodityItems.push(<MenuItem value={commodity.code} key={commodity.code} primaryText={commodity.description} />)
+        });
 
         this.locationItems = [];
-        this.locationItems.push(<MenuItem value={'LON'} key={'LON'} primaryText="London" />);
-        this.locationItems.push(<MenuItem value={'NYC'} key={'NYC'} primaryText="New York" />);
-        this.locationItems.push(<MenuItem value={'SGP'} key={'SGP'} primaryText="Singapore" />);
+        Object.keys(this.props.refdata.locations).forEach(key => {
+            let location = this.props.refdata.locations[key];
+            this.locationItems.push(<MenuItem value={location.code} key={location.code} primaryText={location.description} />)
+        });
+
+        this.cpItems = [];
+        Object.keys(this.props.refdata.counterparties).forEach(key => {
+            let cp = this.props.refdata.counterparties[key];
+           this.cpItems.push(<MenuItem value={cp.code} key={cp.code} primaryText={cp.description} />)
+        });
 
     }
 
