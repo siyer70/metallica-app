@@ -19,23 +19,36 @@ const tabStyles = {
 export default class FeatureTabs extends Component {
     constructor(props) {
         super(props);
-        let commodities = refdataQueryService.loadCommodities();
-        let locations = refdataQueryService.loadLocations();      
-        let counterparties = refdataQueryService.loadCounterparties();
-        this.refdata = {commodities, locations, counterparties};
-        this.commodityLoaded = false;
-        this.locationsLoaded = false;
-        this.cpLoaded = false;
+        this.commodities = [];
+        this.locations = [];
+        this.counterparties = [];
+        this.refdata = {commodities:[], locations:[], counterparties:[]};
         this.state = {
             refdataLoaded : false
         }
+        this.loadReferenceData();
     }
 
     loadReferenceData() {
-        
+        let promises = [];
+        promises.push(refdataQueryService.loadCommodities());
+        promises.push(refdataQueryService.loadLocations());      
+        promises.push(refdataQueryService.loadCounterparties());
+        Promise.all(promises).then(values => {
+            console.log("completed", values);
+            this.commodities = values[0];
+            this.locations = values[1];
+            this.counterparties = values[2];
+            this.refdata = {commodities : this.commodities, 
+                            locations : this.locations,
+                            counterparties : this.counterparties
+                            };
+            this.setState({refdataLoaded : true});
+        });
     }
 
     render() {
+        console.log("render called:", this.state.refdataLoaded);
         let {trades, activeTrade, createNewTrade, 
             updateTrade, deleteTrade, loadTrades, 
             queryTrades, queryTrade, setActiveTrade} = this.props;
@@ -46,7 +59,7 @@ export default class FeatureTabs extends Component {
                     <Tab label="TRADES" style={{backgroundColor:"#F5F5F5", color:"#000000"}}>
                         <div>
                             <Divider />
-                            <SearchComponent ref="searchComponent" loadTrades={loadTrades} queryTrades={queryTrades} refdata={this.refdata}/>
+                            <SearchComponent ref="searchComponent" key={this.state.refdataLoaded} loadTrades={loadTrades} queryTrades={queryTrades} refdata={this.refdata}/>
                             <TradeContainer ref="tradeContainer" {...this.props} />
                         </div>
                     </Tab>

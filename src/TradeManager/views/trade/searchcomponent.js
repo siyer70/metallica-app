@@ -23,29 +23,21 @@ class SearchComponent extends Component {
 
         this.commodityItems = [];
         this.commodityItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
-        this.props.refdata.commodities.then(commodities => {
-            commodities.forEach(commodity => {
+        this.props.refdata.commodities.forEach(commodity => {
                this.commodityItems.push(<MenuItem value={commodity.code} key={commodity.code} primaryText={commodity.description} />)
-            });
-
         });
 
         this.locationItems = [];
         this.locationItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
-        this.props.refdata.locations.then(locations => {
-            locations.forEach(location => {
+        this.props.refdata.locations.forEach(location => {
                this.locationItems.push(<MenuItem value={location.code} key={location.code} primaryText={location.description} />)
-            });
-
         });
+
 
         this.cpItems = [];
         this.cpItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
-        this.props.refdata.counterparties.then(counterparties => {
-            counterparties.forEach(cp => {
+        this.props.refdata.counterparties.forEach(cp => {
                this.cpItems.push(<MenuItem value={cp.code} key={cp.code} primaryText={cp.description} />)
-            });
-
         });
 
     }
