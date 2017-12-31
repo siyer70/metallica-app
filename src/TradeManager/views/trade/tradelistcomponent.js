@@ -14,6 +14,7 @@ import IconButton from 'material-ui/IconButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+const moment = require('moment');
   
 class TradeListComponent extends Component {
     constructor() {
@@ -44,7 +45,21 @@ class TradeListComponent extends Component {
     };
 
     render() {
-        this.tradeList = Object.keys(this.props.trades).map((key, index) => this.props.trades[key]); 
+        this.tradeList = Object.keys(this.props.trades).map((key, index) => {
+            let tradeBody = this.props.trades[key];
+            let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("DD/MM/YYYY");
+            tradeBody.tradeDate = tradeDate;
+            tradeBody.commodity = (Object.keys(this.props.refdata.commodities).length>0)
+                                        ? this.props.refdata.commodities[tradeBody.commodity].description 
+                                        : tradeBody.commodity;
+            tradeBody.location = (Object.keys(this.props.refdata.locations).length>0)
+                                        ? this.props.refdata.locations[tradeBody.location].description 
+                                        : tradeBody.location;
+            tradeBody.counterparty = (Object.keys(this.props.refdata.counterparties).length>0)
+                                        ? this.props.refdata.counterparties[tradeBody.counterparty].description 
+                                        : tradeBody.counterparty;
+            return tradeBody;
+        }); 
         let tblColHeadStyle = {textAlign:'left', backgroundColor:"#F5F5F5", color:'#000000', fontWeight:'bold'};
         let tblColStyle = {textAlign:'left'};
         return (
@@ -55,12 +70,12 @@ class TradeListComponent extends Component {
                                     adjustForCheckbox={false}
                                     enableSelectAll={false}>
                         <TableRow>
-                            <TableHeaderColumn width="25%" style={tblColHeadStyle}>Trade Date</TableHeaderColumn>
-                            <TableHeaderColumn width="10%" style={tblColHeadStyle}>Commodity</TableHeaderColumn>
+                            <TableHeaderColumn width="15%" style={tblColHeadStyle}>Trade Date</TableHeaderColumn>
+                            <TableHeaderColumn width="15%" style={tblColHeadStyle}>Commodity</TableHeaderColumn>
                             <TableHeaderColumn width="10%" style={tblColHeadStyle}>Side</TableHeaderColumn>
                             <TableHeaderColumn width="10%" style={tblColHeadStyle}>Qty (MT)</TableHeaderColumn>
                             <TableHeaderColumn width="15%" style={tblColHeadStyle}>Price (/MT)</TableHeaderColumn>
-                            <TableHeaderColumn width="10%" style={tblColHeadStyle}>Counterparty</TableHeaderColumn>
+                            <TableHeaderColumn width="15%" style={tblColHeadStyle}>Counterparty</TableHeaderColumn>
                             <TableHeaderColumn width="10%" style={tblColHeadStyle}>Location</TableHeaderColumn>
                             <TableHeaderColumn width="10%" style={tblColHeadStyle}>Action</TableHeaderColumn>
                         </TableRow>
@@ -70,12 +85,12 @@ class TradeListComponent extends Component {
                             {        
                                 this.tradeList.map((trade, index) => (
                                     <TableRow key={trade['tradeId']} selected={this.isSelected(index)}>
-                                        <TableRowColumn key={index} width="25%" style={tblColStyle}>{trade['tradeDate']}</TableRowColumn>
-                                        <TableRowColumn key={index} width="10%" style={tblColStyle}>{trade['commodity']}</TableRowColumn>
+                                        <TableRowColumn key={index} width="15%" style={tblColStyle}>{trade['tradeDate']}</TableRowColumn>
+                                        <TableRowColumn key={index} width="15%" style={tblColStyle}>{trade['commodity']}</TableRowColumn>
                                         <TableRowColumn key={index} width="10%" style={tblColStyle}>{trade['side']}</TableRowColumn>
                                         <TableRowColumn key={index} width="10%" style={tblColStyle}>{trade['quantity']}</TableRowColumn>
                                         <TableRowColumn key={index} width="15%" style={tblColStyle}>{trade['price']}</TableRowColumn>
-                                        <TableRowColumn key={index} width="10%" style={tblColStyle}>{trade['counterparty']}</TableRowColumn>
+                                        <TableRowColumn key={index} width="15%" style={tblColStyle}>{trade['counterparty']}</TableRowColumn>
                                         <TableRowColumn key={index} width="10%" style={tblColStyle}>{trade['location']}</TableRowColumn>
                                         <TableRowColumn key={index} data-trade-id={trade['tradeId']} width="10%" style={tblColStyle}>
                                             <IconButton onClick={this.handleDeleteRowClick.bind(this)}><ActionDelete/></IconButton>

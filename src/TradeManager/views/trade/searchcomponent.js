@@ -23,20 +23,23 @@ class SearchComponent extends Component {
 
         this.commodityItems = [];
         this.commodityItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
-        this.props.refdata.commodities.forEach(commodity => {
-               this.commodityItems.push(<MenuItem value={commodity.code} key={commodity.code} primaryText={commodity.description} />)
+        Object.keys(this.props.refdata.commodities).forEach(key => {
+                let commodity = this.props.refdata.commodities[key];
+                this.commodityItems.push(<MenuItem value={commodity.code} key={commodity.code} primaryText={commodity.description} />)
         });
 
         this.locationItems = [];
         this.locationItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
-        this.props.refdata.locations.forEach(location => {
-               this.locationItems.push(<MenuItem value={location.code} key={location.code} primaryText={location.description} />)
+        Object.keys(this.props.refdata.locations).forEach(key => {
+                let location = this.props.refdata.locations[key];
+                this.locationItems.push(<MenuItem value={location.code} key={location.code} primaryText={location.description} />)
         });
 
 
         this.cpItems = [];
         this.cpItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
-        this.props.refdata.counterparties.forEach(cp => {
+        Object.keys(this.props.refdata.counterparties).forEach(key => {
+                let cp = this.props.refdata.counterparties[key];
                this.cpItems.push(<MenuItem value={cp.code} key={cp.code} primaryText={cp.description} />)
         });
 
