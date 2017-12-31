@@ -57,6 +57,7 @@ class Login extends Component {
                                     <TextField
                                         ref="txtPassword"
                                         value = {this.state.password}
+                                        type="password"
                                         onChange={this.handleOnChangePassword.bind(this)}
                                         hintText="Enter your password"
                                         errorText="This field is required"
