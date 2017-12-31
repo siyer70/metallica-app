@@ -1,8 +1,10 @@
 import io from 'socket.io-client';
+import myprocess from './../../common/config';
 
 export default class EventHandler {
     constructor() {
-        this.socket = io('http://localhost:3050');
+        console.log("Notification server url:", myprocess.env.NOTIFICATION_SERVER_URL);
+        this.socket = io(myprocess.env.NOTIFICATION_SERVER_URL);
     }
 
     listenForConnectionEvents(cb) {

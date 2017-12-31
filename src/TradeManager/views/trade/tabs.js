@@ -5,6 +5,7 @@ import Divider from 'material-ui/Divider';
 import TradeContainer from './tradecontainer';
 import TradeListComponent from './tradelistcomponent';
 import TradeComponent from './tradecomponent';
+import refdataQueryService from './../../services/refdataQueryService';
 
 const tabStyles = {
     tabHeading: {
@@ -18,6 +19,20 @@ const tabStyles = {
 export default class FeatureTabs extends Component {
     constructor(props) {
         super(props);
+        let commodities = refdataQueryService.loadCommodities();
+        let locations = refdataQueryService.loadLocations();      
+        let counterparties = refdataQueryService.loadCounterparties();
+        this.refdata = {commodities, locations, counterparties};
+        this.commodityLoaded = false;
+        this.locationsLoaded = false;
+        this.cpLoaded = false;
+        this.state = {
+            refdataLoaded : false
+        }
+    }
+
+    loadReferenceData() {
+        
     }
 
     render() {
@@ -31,8 +46,8 @@ export default class FeatureTabs extends Component {
                     <Tab label="TRADES" style={{backgroundColor:"#F5F5F5", color:"#000000"}}>
                         <div>
                             <Divider />
-                            <SearchComponent loadTrades={loadTrades} queryTrades={queryTrades} />
-                            <TradeContainer {...this.props} />
+                            <SearchComponent ref="searchComponent" loadTrades={loadTrades} queryTrades={queryTrades} refdata={this.refdata}/>
+                            <TradeContainer ref="tradeContainer" {...this.props} />
                         </div>
                     </Tab>
                     <Tab label="TRANSFERS" style={{backgroundColor:"#F5F5F5", color:"#000000"}}>

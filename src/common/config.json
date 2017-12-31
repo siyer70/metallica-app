@@ -1,23 +1,38 @@
 {
   "development" : {
-    "API_GATEWAY_URL" : "http://dlusshek273879.sapient.com:8765",
+    "NOTIFICATION_SERVER_URL" : "http://localhost:3050",
+    "API_GATEWAY_URL" : "http://localhost:8765",
     "TRADE_QUERY_SERVICE_BASE_URL" : "/services/tradeservice",
     "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
     "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",
-    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades"
+    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades",
+    "REFDATA_QUERY_SERVICE_BASE_URL" : "/services/refdataservice",
+    "REFDATA_COMMODITY_SERVICE" : "/commodities",
+    "REFDATA_LOCATION_SERVICE" : "/locations",
+    "REFDATA_CP_SERVICE" : "/counterparties"
   },
   "test" : {
-    "API_GATEWAY_URL" : "http://dlusshek273879.sapient.com:8765",
+    "NOTIFICATION_SERVER_URL" : "http://localhost:3050",
+    "API_GATEWAY_URL" : "http://localhost:8765",
     "TRADE_QUERY_SERVICE_BASE_URL" : "/services/tradeservice",
     "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
     "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",
-    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades"
+    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades",
+    "REFDATA_QUERY_SERVICE_BASE_URL" : "/services/refdataservice",
+    "REFDATA_COMMODITY_SERVICE" : "/commodities",
+    "REFDATA_LOCATION_SERVICE" : "/locations",
+    "REFDATA_CP_SERVICE" : "/counterparties"
   },
   "production" : {
-    "API_GATEWAY_URL" : "http://dlusshek273879.sapient.com:8765",
+    "NOTIFICATION_SERVER_URL" : "http://10.1.0.4:3050",
+    "API_GATEWAY_URL" : "http://api-gateway-explore.azurewebsites.net",
     "TRADE_QUERY_SERVICE_BASE_URL" : "/services/tradeservice",
     "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
     "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",
-    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades"
+    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades",
+    "REFDATA_QUERY_SERVICE_BASE_URL" : "/services/refdataservice",
+    "REFDATA_COMMODITY_SERVICE" : "/commodities",
+    "REFDATA_LOCATION_SERVICE" : "/locations",
+    "REFDATA_CP_SERVICE" : "/counterparties"
   }
 }

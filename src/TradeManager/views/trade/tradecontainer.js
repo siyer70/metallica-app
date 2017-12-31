@@ -12,7 +12,7 @@ export default class TradeContainer extends Component {
     }
 
     render() {
-        let {trades, activeTrade, createNewTrade, 
+        let {trades, refdata, activeTrade, createNewTrade, 
             updateTrade, deleteTrade, loadTrades, 
             queryTrades, queryTrade, setActiveTrade} = this.props;
             
@@ -23,11 +23,11 @@ export default class TradeContainer extends Component {
                         <td width="65%" style={{verticalAlign:'top'}}>
                             <TradeListComponent ref="tradeListComponent"
                                 handleNewTradeRequest={this.handleNewTradeRequest.bind(this)} 
-                                {...{trades, setActiveTrade, deleteTrade}} />
+                                {...{trades, setActiveTrade, refdata, deleteTrade}} />
                         </td>
                         <td width="35%" height="60%" style={{verticalAlign:'top'}}>
                             <TradeComponent ref="tradeComponent" {...{createNewTrade, updateTrade, 
-                                deleteTrade, activeTrade}}/>
+                                deleteTrade, activeTrade, refdata}}/>
                         </td>
                     </tr>
                 </tbody>

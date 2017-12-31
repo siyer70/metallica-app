@@ -22,21 +22,32 @@ class SearchComponent extends Component {
         }
 
         this.commodityItems = [];
-        this.commodityItems.push(<MenuItem value={'AL'} key={'AL'} primaryText="Aluminium" />);
-        this.commodityItems.push(<MenuItem value={'ZN'} key={'ZN'} primaryText="Zinc" />);
-        this.commodityItems.push(<MenuItem value={'CU'} key={'CU'} primaryText="Copper" />);
-        this.commodityItems.push(<MenuItem value={'AU'} key={'AU'} primaryText="Gold" />);
-        this.commodityItems.push(<MenuItem value={'AG'} key={'AG'} primaryText="Silver" />);
+        this.commodityItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
+        this.props.refdata.commodities.then(commodities => {
+            commodities.forEach(commodity => {
+               this.commodityItems.push(<MenuItem value={commodity.code} key={commodity.code} primaryText={commodity.description} />)
+            });
 
-        this.cpItems = [];
-        this.cpItems.push(<MenuItem value={'ABCL'} key={'ABCL'} primaryText="ABCL" />);
-        this.cpItems.push(<MenuItem value={'AAPL'} key={'AAPL'} primaryText="Apple" />);
-        this.cpItems.push(<MenuItem value={'INFY'} key={'INFY'} primaryText="Infosys" />);
+        });
 
         this.locationItems = [];
-        this.locationItems.push(<MenuItem value={'LON'} key={'LON'} primaryText="London" />);
-        this.locationItems.push(<MenuItem value={'NYC'} key={'NYC'} primaryText="New York" />);
-        this.locationItems.push(<MenuItem value={'SGP'} key={'SGP'} primaryText="Singapore" />);
+        this.locationItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
+        this.props.refdata.locations.then(locations => {
+            locations.forEach(location => {
+               this.locationItems.push(<MenuItem value={location.code} key={location.code} primaryText={location.description} />)
+            });
+
+        });
+
+        this.cpItems = [];
+        this.cpItems.push(<MenuItem value={'ALL'} key={'ALL'} primaryText="All" />);
+        this.props.refdata.counterparties.then(counterparties => {
+            counterparties.forEach(cp => {
+               this.cpItems.push(<MenuItem value={cp.code} key={cp.code} primaryText={cp.description} />)
+            });
+
+        });
+
     }
 
 	componentDidMount(){

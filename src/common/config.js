@@ -2,6 +2,8 @@ var env = process.env.NODE_ENV || 'development';
 
 const myprocess = {env:{}};
 
+console.log("Environment variable list: ", process.env);
+
 //if(env==='development' || env==='test') {
   var config = require('./config.json');
   var envConfig = config[env];
