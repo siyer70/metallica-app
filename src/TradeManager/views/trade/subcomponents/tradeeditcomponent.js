@@ -130,6 +130,11 @@ export default class TradeEditComponent extends Component {
         this.setState({quantity:event.target.value});
     }
 
+    handleOnChangeSide(event, value) {
+        console.log("selected value:", value);
+        this.setState({side: value});
+    }
+
     render() {
 
         let contentStyle = {fontSize: "14px"};
@@ -170,7 +175,8 @@ export default class TradeEditComponent extends Component {
                             <tr style={rowStyle}>
                                 <td style={colStyle}>Side</td>
                                 <td>
-                                    <RadioButtonGroup ref="rbBuySell" name="buySell" valueSelected={this.state.side}>
+                                    <RadioButtonGroup ref="rbBuySell" name="buySell" valueSelected={this.state.side} 
+                                                onChange={this.handleOnChangeSide.bind(this)}>
                                         <RadioButton
                                             value="Buy"
                                             label="Buy"
