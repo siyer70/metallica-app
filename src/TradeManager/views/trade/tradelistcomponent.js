@@ -21,7 +21,8 @@ class TradeListComponent extends Component {
         super(props);
         this.tradeList = [];
         this.state = {
-            selected : [0]
+            selected : [0],
+            btnDisabled : false
         };
     }
 
@@ -43,6 +44,11 @@ class TradeListComponent extends Component {
             this.props.setActiveTrade(tradeId, this.props.trades[tradeId]);
         }
     };
+
+    handleNewTradeRequest() {
+        this.setState({btnDisabled : true});
+        this.props.handleNewTradeRequest();
+    }
 
     render() {
         this.tradeList = Object.keys(this.props.trades).map((key, index) => {
@@ -110,8 +116,8 @@ class TradeListComponent extends Component {
                                 <TableRowColumn colSpan="6">
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    <FloatingActionButton mini={true} secondary={true} 
-                                            onClick={this.props.handleNewTradeRequest}>
+                                    <FloatingActionButton ref="btnAddNew" disabled={this.state.btnDisabled} mini={true} secondary={true} 
+                                            onClick={this.handleNewTradeRequest.bind(this)}>
                                         <ContentAdd />
                                     </FloatingActionButton>
                                 </TableRowColumn>

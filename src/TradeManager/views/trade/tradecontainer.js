@@ -26,6 +26,18 @@ export default class TradeContainer extends Component {
         this.refs.tradeComponent.handleNewButtonClick();
     }
 
+    handlePostEditClick() {
+        this.refs.tradeListComponent.setState({btnDisabled : true});
+    }
+
+    handlePostSaveClick() {
+        this.refs.tradeListComponent.setState({btnDisabled : false});
+    }
+
+    handleCancelClick() {
+        this.refs.tradeListComponent.setState({btnDisabled : false});
+    }
+
     render() {
         let {trades, refdata, activeTrade, createNewTrade, 
             updateTrade, deleteTrade, loadTrades, 
@@ -42,7 +54,11 @@ export default class TradeContainer extends Component {
                         </td>
                         <td width="35%" height="60%" style={{verticalAlign:'top'}}>
                             <TradeComponent ref="tradeComponent" {...{createNewTrade, updateTrade, 
-                                deleteTrade, activeTrade, refdata}}/>
+                                deleteTrade, activeTrade, refdata}}
+                                handlePostEditClick={this.handlePostEditClick.bind(this)}
+                                handlePostSaveClick={this.handlePostSaveClick.bind(this)}
+                                handleCancelClick={this.handleCancelClick.bind(this)}
+                            />
                         </td>
                     </tr>
                 </tbody>

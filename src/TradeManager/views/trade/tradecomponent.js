@@ -26,6 +26,7 @@ class TradeComponent extends Component {
         let tradeId = this.props.activeTrade.tradeBody.tradeId;
         if(tradeId && tradeId !== "0") {
             this.setState({editMode:true, isNewTrade:false});
+            this.props.handlePostEditClick();
         } else {
             alert("Select a trade from the left panel and click edit");
         }
@@ -41,11 +42,15 @@ class TradeComponent extends Component {
 
     handlePostSaveClick() {
         this.setState({editMode:false, isNewTrade:false});
+        this.props.handlePostSaveClick();
     }
 
     handleCancelClick() {
         let yes = confirm("Your changes to this trade will be lost - Proceed?");
-        if(yes) this.setState({editMode:false, isNewTrade:false});
+        if(yes) {
+            this.setState({editMode:false, isNewTrade:false});
+            this.props.handleCancelClick();
+        }
     }
 
     fillDefaultValues() {
