@@ -131,7 +131,6 @@ export default class TradeEditComponent extends Component {
     }
 
     handleOnChangeSide(event, value) {
-        console.log("selected value:", value);
         this.setState({side: value});
     }
 
