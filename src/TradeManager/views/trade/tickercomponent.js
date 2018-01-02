@@ -3,23 +3,22 @@ import {Card, CardText, CardActions} from 'material-ui/Card';
 import EventHandler from './../../eventhandlers/EventHandler';
 
 class TickerComponent extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.tickers = {};
-        this.tickers['AU'] = {code:"AU",name:"Gold",date:"2017-12-21T13:37:08.605Z",unit:"1 oz",currency:"USD",price:1250.17};
-        this.tickers['CU'] = {code:"CU",name:"Copper",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:6595.02};
-        this.tickers['ZN'] = {code:"ZN",name:"Zinc",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:3092.64};
-        this.tickers['AL'] = {code:"AL",name:"Aluminium",date:"2017-12-21T13:37:08.605Z",unit:"1 ",currency:"USD",price:2010.53};
-        this.eventHandler = new EventHandler();
+        this.tickers['AU'] = {code:"AU",name:"Gold",date:"2017-12-21T13:37:08.605Z",unit:"1 oz",currency:"USD",price:0};
+        this.tickers['CU'] = {code:"CU",name:"Copper",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:0};
+        this.tickers['ZN'] = {code:"ZN",name:"Zinc",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:0};
+        this.tickers['AL'] = {code:"AL",name:"Aluminium",date:"2017-12-21T13:37:08.605Z",unit:"1 ",currency:"USD",price:0};
     }
 
 	componentDidMount(){
-        this.eventHandler.subscribeForMarketDataEvents(
+        this.props.eventHandler.subscribeForMarketDataEvents(
             this.marketDataEventCallback, this);
     }
 
     componentWillUnmount() {
-        this.eventHandler.unsubscribeForMarketDataEvents();
+        this.props.eventHandler.unsubscribeForMarketDataEvents();
     }
 
     marketDataEventCallback(data, source) {

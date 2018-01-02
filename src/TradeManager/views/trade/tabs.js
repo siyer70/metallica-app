@@ -56,8 +56,8 @@ export default class FeatureTabs extends Component {
 
     render() {
         let {trades, activeTrade, createNewTrade, 
-            updateTrade, deleteTrade, loadTrades, 
-            queryTrades, queryTrade, setActiveTrade} = this.props;
+            updateTrade, deleteTrade, loadTrades, tradeEventDispatcher, 
+            queryTrades, queryTrade, setActiveTrade, eventHandler} = this.props;
             
         return (
             <div>
@@ -68,7 +68,7 @@ export default class FeatureTabs extends Component {
                             <SearchComponent ref="searchComponent" 
                                 key={'searchwithrefdata:'+this.state.refdataLoaded} 
                                 loadTrades={loadTrades} queryTrades={queryTrades} 
-                                refdata={this.refdata}/>
+                                refdata={this.refdata} />
                             <TradeContainer ref="tradeContainer" 
                                 key={'containerwithrefdata:'+this.state.refdataLoaded} 
                                 refdata={this.refdata} {...this.props} />

@@ -17,8 +17,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 const moment = require('moment');
   
 class TradeListComponent extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.tradeList = [];
         this.state = {
             selected : [0]

@@ -7,6 +7,21 @@ export default class TradeContainer extends Component {
         super(props);
     }
 
+	componentDidMount(){
+        this.props.eventHandler.subscribeForTradeDataEvents(
+            this.tradeDataEventCallback, this);
+    }
+
+    componentWillUnmount() {
+        this.props.eventHandler.unsubscribeForTradeDataEvents();
+    }
+
+    tradeDataEventCallback(data, source) {
+        let tradeEventInJSON = JSON.parse(data);
+        console.log("Dispatching tradeevent:", tradeEventInJSON);
+        source.props.tradeEventDispatcher(tradeEventInJSON);
+    }
+
     handleNewTradeRequest() {
         this.refs.tradeComponent.handleNewButtonClick();
     }
@@ -14,8 +29,8 @@ export default class TradeContainer extends Component {
     render() {
         let {trades, refdata, activeTrade, createNewTrade, 
             updateTrade, deleteTrade, loadTrades, 
-            queryTrades, queryTrade, setActiveTrade} = this.props;
-            
+            queryTrades, queryTrade, setActiveTrade, eventHandler} = this.props;
+        
         return (
             <table>
                 <tbody>
@@ -23,7 +38,7 @@ export default class TradeContainer extends Component {
                         <td width="65%" style={{verticalAlign:'top'}}>
                             <TradeListComponent ref="tradeListComponent"
                                 handleNewTradeRequest={this.handleNewTradeRequest.bind(this)} 
-                                {...{trades, setActiveTrade, refdata, deleteTrade}} />
+                                {...{trades, setActiveTrade, refdata, deleteTrade, eventHandler}} />
                         </td>
                         <td width="35%" height="60%" style={{verticalAlign:'top'}}>
                             <TradeComponent ref="tradeComponent" {...{createNewTrade, updateTrade, 

@@ -6,6 +6,7 @@ export default class EventHandler {
         console.log("Notification server url:", myprocess.env.NOTIFICATION_SERVER_URL);
         this.socket = io(myprocess.env.NOTIFICATION_SERVER_URL);
         this.marketDataEventCallback = undefined;
+        this.tradeEventCallback = undefined;
     }
 
     listenForConnectionEvents(cb) {
@@ -20,12 +21,20 @@ export default class EventHandler {
         });
     }
 
-    subscribeForTradeDataEvents(tradeEventCallback) {
+    subscribeForTradeDataEvents(cb, source) {
+        this.tradeEventCallback = cb;
+        let thisClass = this;
         this.socket.on('trade event', function(data) {
-            tradeEventCallback(data);
+            if(thisClass.tradeEventCallback!==undefined) {
+                thisClass.tradeEventCallback(data, source);
+            }
         });
     }
 
+    unsubscribeForTradeDataEvents(cb, source) {
+        this.tradeEventCallback = undefined;
+    }
+    
     subscribeForMarketDataEvents(cb, source) {
         this.marketDataEventCallback = cb;
         let thisClass = this;

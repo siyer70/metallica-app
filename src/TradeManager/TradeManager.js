@@ -14,6 +14,7 @@ import PageHeader from './../common/header';
 import StatusIndicator from './../StatusIndicator/StatusIndicator';
 import TickerComponent from './views/trade/tickercomponent';
 import FeatureTabs from './views/trade/tabs';
+import EventHandler from './eventhandlers/EventHandler';
 
 const styles = {
   container: {
@@ -31,6 +32,7 @@ class TradeManager extends Component {
       currentUser : "schandrasekhar@sapient.com"
     };
 
+    this.eventHandler = new EventHandler();
   }
 
   render() {
@@ -38,8 +40,8 @@ class TradeManager extends Component {
         <div style={styles.container}>
           <StatusIndicator />
           <PageHeader />
-          <TickerComponent />
-          <FeatureTabs {...this.props}/>
+          <TickerComponent eventHandler={this.eventHandler} />
+          <FeatureTabs {...this.props} eventHandler={this.eventHandler} />
         </div>
     );
   }
