@@ -171,7 +171,7 @@ class SearchComponent extends Component {
                                 </table>
                             </td>
                             <td width="20%">
-                                <DropDownListComponent ref="ddlCommodity" items={this.commodityItems} defaultValue={'AL'} />
+                                <DropDownListComponent ref="ddlCommodity" items={this.commodityItems} defaultValue={'ALL'} />
                             </td>
                             <td width="25%">
                                 <table>
@@ -188,10 +188,10 @@ class SearchComponent extends Component {
                                 </table>
                             </td>
                             <td width="15%">
-                                <DropDownListComponent ref="ddlCP" items={this.cpItems} defaultValue={'AAPL'} />
+                                <DropDownListComponent ref="ddlCP" items={this.cpItems} defaultValue={'ALL'} />
                             </td>
                             <td width="15%">
-                                <DropDownListComponent ref="ddlLocation" items={this.locationItems} defaultValue={'LON'} />
+                                <DropDownListComponent ref="ddlLocation" items={this.locationItems} defaultValue={'ALL'} />
                             </td>
                         </tr>
                         <tr>
