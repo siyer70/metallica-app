@@ -68,25 +68,40 @@ class SearchComponent extends Component {
     queryTradesBasedOnCurrentCriteria() {
         let {loadTrades, queryTrades} = this.props;
 
-        // convert from en-GB to API expected format YYYY-MM-DD
+        let dtFrom = moment(this.refs.dtTradeFrom.refs.input.getValue(), 
+                    "DD/MM/YYYY"); 
+        let dtTo = moment(this.refs.dtTradeTo.refs.input.getValue(), 
+                    "DD/MM/YYYY");
+        
+        let buySellSelection = this.getBuySellSelection();
+
+                    // convert from en-GB to API expected format YYYY-MM-DD
         let dtRange = [
-            moment(this.refs.dtTradeFrom.refs.input.getValue(), 
-                        "DD/MM/YYYY").format("YYYYMMDD"),
-            moment(this.refs.dtTradeTo.refs.input.getValue(), 
-                        "DD/MM/YYYY").format("YYYYMMDD")
+            dtFrom.format("YYYYMMDD"),
+            dtTo.format("YYYYMMDD")
         ].join();
 
         let qp = [
             dtRange,
             this.refs.ddlCommodity.state.value,
-            this.getBuySellSelection(),
+            buySellSelection,
             this.refs.ddlCP.state.value,
             this.refs.ddlLocation.state.value
         ].join('/');
         
+        let queryCriteriaAsJSON = {
+            dateFrom : dtFrom,
+            dateTo : dtTo,
+            commodity : this.refs.ddlCommodity.state.value,
+            side : buySellSelection,
+            counterparty : this.refs.ddlCP.state.value,
+            location : this.refs.ddlLocation.state.value
+        };
+        
         console.log(qp);
+        console.log(queryCriteriaAsJSON);
 
-        queryTrades(qp);
+        queryTrades({queryForAPICall : qp, queryJson : queryCriteriaAsJSON});
     }
 
     handleClick(event) {

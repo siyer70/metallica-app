@@ -41,7 +41,7 @@ class TradeListComponent extends Component {
         });
         if(selectedRows.length>0) {
             let tradeId = this.tradeList[selectedRows[0]].tradeId;
-            this.props.setActiveTrade(tradeId, this.props.trades[tradeId]);
+            this.props.setActiveTrade(tradeId, this.props.trades.trades[tradeId]);
         }
     };
 
@@ -50,9 +50,25 @@ class TradeListComponent extends Component {
         this.props.handleNewTradeRequest();
     }
 
+    filterTrades(trades, queryCriteria) {
+        let filteredKeys = Object.keys(trades).filter((key) => {
+            let tradeBody = trades[key];
+            let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DD").toDate();  
+            if(queryCriteria.commodity!='ALL' && tradeBody.commodity !== queryCriteria.commodity) return false;
+            if(queryCriteria.location!='ALL'&& tradeBody.location !== queryCriteria.location) return false;
+            if(queryCriteria.counterparty!='ALL' && tradeBody.counterparty !== queryCriteria.counterparty) return false;
+            if(queryCriteria.side!='ALL' && tradeBody.side !== queryCriteria.side) return false;
+            if((tradeDate < queryCriteria.dateFrom.toDate()) || (tradeDate > queryCriteria.dateTo.toDate())) 
+                    return false;
+            return true;
+        })
+        let filteredTrades = filteredKeys.map((key, index) => ( {...trades[key]} ) );
+        return filteredTrades;
+    }
+
     render() {
-        this.tradeList = Object.keys(this.props.trades).map((key, index) => {
-            let tradeBody = {...this.props.trades[key]};
+        let trades = this.filterTrades(this.props.trades.trades, this.props.trades.queryCriteria);
+        this.tradeList = trades.map((tradeBody, index) => {
             let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("DD/MM/YYYY");
             tradeBody.tradeDate = tradeDate;
 

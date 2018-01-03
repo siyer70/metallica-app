@@ -5,11 +5,11 @@ function queryTrades(queryParams){
 			type : 'LOADING'
 		});
 		tradeQueryService
-			.queryTrades(queryParams)
+			.queryTrades(queryParams.queryForAPICall)
 			.then(trades => {
 				return dispatch({
 				type : 'LOADED',
-				payload : trades
+				payload : {queryCriteria: queryParams.queryJson, trades, tradeToSelect: undefined}
 			})})
 			.then(() => dispatch({ 
 				type : 'DONE'
