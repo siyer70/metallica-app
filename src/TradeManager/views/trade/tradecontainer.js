@@ -38,6 +38,10 @@ export default class TradeContainer extends Component {
         this.refs.tradeListComponent.setState({btnDisabled : false});
     }
 
+    isTradeInEditMode() {
+        return (this.refs.tradeComponent!==undefined) ? this.refs.tradeComponent.state.editMode : false;        
+    }
+
     render() {
         let {trades, refdata, activeTrade, createNewTrade, 
             updateTrade, deleteTrade, loadTrades, 
@@ -49,7 +53,8 @@ export default class TradeContainer extends Component {
                     <tr>
                         <td width="65%" style={{verticalAlign:'top'}}>
                             <TradeListComponent ref="tradeListComponent"
-                                handleNewTradeRequest={this.handleNewTradeRequest.bind(this)} 
+                                handleNewTradeRequest={this.handleNewTradeRequest.bind(this)}
+                                isTradeInEditMode={this.isTradeInEditMode.bind(this)} 
                                 {...{trades, setActiveTrade, refdata, deleteTrade, eventHandler}} />
                         </td>
                         <td width="35%" height="60%" style={{verticalAlign:'top'}}>

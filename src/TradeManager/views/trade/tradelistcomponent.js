@@ -39,7 +39,7 @@ class TradeListComponent extends Component {
         this.setState({
           selected: selectedRows,
         });
-        if(selectedRows.length>0) {
+        if(selectedRows.length>0 && this.props.isTradeInEditMode()!==true) {
             let tradeId = this.tradeList[selectedRows[0]].tradeId;
             this.props.setActiveTrade(tradeId, this.props.trades.trades[tradeId]);
         }
@@ -67,6 +67,11 @@ class TradeListComponent extends Component {
     }
 
     render() {
+        // let selectedTradeId = this.props.trades.tradeToSelect;
+        // let selectedTradeBody = this.props.trades.trades[selectedTradeId];
+        // console.log("Trade to select is: ", selectedTradeId);
+        // console.log("Is Trade in Edit Mode:", this.props.isTradeInEditMode());
+        // console.log("Selected trade values:", selectedTradeBody);
         let trades = this.filterTrades(this.props.trades.trades, this.props.trades.queryCriteria);
         this.tradeList = trades.map((tradeBody, index) => {
             let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("DD/MM/YYYY");

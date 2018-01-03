@@ -1,4 +1,5 @@
 import tradeCommandService from '../services/tradeCommandService';
+import setActiveTrade from './setActiveTrade';
 
 function updateTrade(tradeId, tradeBody){
 	return function(dispatch){
@@ -7,10 +8,13 @@ function updateTrade(tradeId, tradeBody){
 		});
 		tradeCommandService
 			.updateTrade(tradeId, tradeBody)
-			.then(alteredTradeData => dispatch({
-				type : 'UPDATED',
-				payload : alteredTradeData
-			}))
+			.then(alteredTradeData => {
+				dispatch({
+					type : 'UPDATED',
+					payload : alteredTradeData
+				});
+				setActiveTrade(`{alteredTradeData.tradeId}`, alteredTradeData)(dispatch);
+			})
 			.then(() => dispatch({ 
 				type : 'DONE'
 			}))
