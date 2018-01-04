@@ -67,11 +67,6 @@ class TradeListComponent extends Component {
     }
 
     render() {
-        // let selectedTradeId = this.props.trades.tradeToSelect;
-        // let selectedTradeBody = this.props.trades.trades[selectedTradeId];
-        // console.log("Trade to select is: ", selectedTradeId);
-        // console.log("Is Trade in Edit Mode:", this.props.isTradeInEditMode());
-        // console.log("Selected trade values:", selectedTradeBody);
         let trades = this.filterTrades(this.props.trades.trades, this.props.trades.queryCriteria);
         this.tradeList = trades.map((tradeBody, index) => {
             let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("DD/MM/YYYY");
