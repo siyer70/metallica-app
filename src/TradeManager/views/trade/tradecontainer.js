@@ -45,7 +45,7 @@ export default class TradeContainer extends Component {
     render() {
         let {trades, refdata, activeTrade, createNewTrade, 
             updateTrade, deleteTrade, loadTrades, 
-            queryTrades, queryTrade, setActiveTrade, eventHandler} = this.props;
+            queryTrades, queryTrade, setActiveTrade, eventHandler, selectTrade} = this.props;
         
         return (
             <table>
@@ -55,7 +55,7 @@ export default class TradeContainer extends Component {
                             <TradeListComponent ref="tradeListComponent"
                                 handleNewTradeRequest={this.handleNewTradeRequest.bind(this)}
                                 isTradeInEditMode={this.isTradeInEditMode.bind(this)} 
-                                {...{trades, setActiveTrade, refdata, deleteTrade, eventHandler}} />
+                                {...{trades, setActiveTrade, refdata, deleteTrade, eventHandler, selectTrade}} />
                         </td>
                         <td width="35%" height="60%" style={{verticalAlign:'top'}}>
                             <TradeComponent ref="tradeComponent" {...{createNewTrade, updateTrade, 

@@ -20,8 +20,8 @@ class TradeListComponent extends Component {
     constructor(props) {
         super(props);
         this.tradeList = [];
+        this.selectedRowIndex = 0;
         this.state = {
-            selected : [0],
             btnDisabled : false
         };
     }
@@ -32,15 +32,14 @@ class TradeListComponent extends Component {
     }
 
     isSelected = (index) => {
-        return this.state.selected.indexOf(index) !== -1;
+        return this.selectedRowIndex===index;
     };    
 
     handleRowSelection = (selectedRows) => {
-        this.setState({
-          selected: selectedRows,
-        });
-        if(selectedRows.length>0 && this.props.isTradeInEditMode()!==true) {
-            let tradeId = this.tradeList[selectedRows[0]].tradeId;
+        this.selectedRowIndex = (selectedRows.length>0)?selectedRows[0]:0;
+        if(this.tradeList.length>0 && this.props.isTradeInEditMode()!==true) {
+            let tradeId = `${this.tradeList[this.selectedRowIndex].tradeId}`;
+            this.props.selectTrade(`${tradeId}`);
             this.props.setActiveTrade(tradeId, this.props.trades.trades[tradeId]);
         }
     };
@@ -66,8 +65,19 @@ class TradeListComponent extends Component {
         return filteredTrades;
     }
 
+    findRowIndexForTradeId(trades, tradeId) {
+        // if no tradeid specified, then use the current row        
+        if(tradeId===undefined) return this.selectedRowIndex; // passed when trade is deleted
+        if(tradeId==='0') return 0; // special value passed at the time querytrades
+        let rowIndex = trades.findIndex((trade, index) => {
+            return (`${trade.tradeId}` === tradeId);
+        })        
+        return (rowIndex===-1)?this.selectedRowIndex:rowIndex;
+    }
+
     render() {
         let trades = this.filterTrades(this.props.trades.trades, this.props.trades.queryCriteria);
+        this.selectedRowIndex = this.findRowIndexForTradeId(trades, this.props.trades.tradeToSelect);
         this.tradeList = trades.map((tradeBody, index) => {
             let tradeDate = moment(tradeBody.tradeDate, "YYYY-MM-DDTHH:mm:ss.SSSZ").format("DD/MM/YYYY");
             tradeBody.tradeDate = tradeDate;

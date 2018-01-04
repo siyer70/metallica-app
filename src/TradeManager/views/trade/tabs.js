@@ -55,9 +55,7 @@ export default class FeatureTabs extends Component {
     }
 
     render() {
-        let {trades, activeTrade, createNewTrade, 
-            updateTrade, deleteTrade, loadTrades, tradeEventDispatcher, 
-            queryTrades, queryTrade, setActiveTrade, eventHandler} = this.props;
+        let {loadTrades, queryTrades} = this.props;
             
         return (
             <div>

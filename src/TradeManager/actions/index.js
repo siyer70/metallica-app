@@ -6,6 +6,7 @@ import queryTrades from './queryTrades';
 import queryTrade from './queryTrade';
 import setActiveTrade from './setActiveTrade';
 import tradeEventDispatcher from './tradeEventDispatcher';
+import selectTrade from './selectTrade';
 
 export { createNewTrade, updateTrade, deleteTrade, 
-    loadTrades, queryTrades, queryTrade, setActiveTrade, tradeEventDispatcher};
+    loadTrades, queryTrades, queryTrade, setActiveTrade, tradeEventDispatcher, selectTrade};

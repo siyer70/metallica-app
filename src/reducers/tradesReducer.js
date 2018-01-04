@@ -9,7 +9,7 @@ function tradesReducer(currentState = initialState, action){
 		let newState = {
 			queryCriteria: action.payload.queryCriteria, 
 			trades, 
-			tradeToSelect: undefined
+			tradeToSelect: '0'
 		};
 		return newState;
 	}
@@ -33,7 +33,15 @@ function tradesReducer(currentState = initialState, action){
 		let newState = {
 			queryCriteria: currentState.queryCriteria, 
 			trades, 
-			tradeToSelect: tradeId
+			tradeToSelect: undefined
+		};
+		return newState;
+	}
+	if (action.type === 'SELECT-TRADE'){
+		let newState = {
+			queryCriteria: currentState.queryCriteria, 
+			trades : currentState.trades, 
+			tradeToSelect: action.payload.tradeToSelect
 		};
 		return newState;
 	}
