@@ -10,6 +10,10 @@ class TickerComponent extends Component {
         this.tickers['CU'] = {code:"CU",name:"Copper",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:0};
         this.tickers['ZN'] = {code:"ZN",name:"Zinc",date:"2017-12-21T13:37:08.605Z",unit:"1 mt",currency:"USD",price:0};
         this.tickers['AL'] = {code:"AL",name:"Aluminium",date:"2017-12-21T13:37:08.605Z",unit:"1 ",currency:"USD",price:0};
+     
+        this.state = {
+            priceInfo: ""
+        }
     }
 
 	componentDidMount(){
@@ -28,6 +32,11 @@ class TickerComponent extends Component {
         let forecolor = (np>=cp)?"#008000":"#ff0000";
         source.refs[marketDataInJSON.code].innerHTML = marketDataInJSON.price;
         source.refs[marketDataInJSON.code].style.color = forecolor;
+        let priceText = "";
+        Object.keys(source.tickers).forEach(key => {
+            priceText += (source.tickers[key].name + ":" + source.refs[key].innerHTML + "\t\t");
+        });
+        source.setState({priceInfo: priceText});
     }
 
     render() {
@@ -42,6 +51,7 @@ class TickerComponent extends Component {
             <div>
                 <Card>
                     <CardText>
+                        <div><marquee direction="left" width="100%"><pre>{this.state.priceInfo}</pre></marquee></div>
                         <table width="100%">
                             <tbody style={contentStyle}>
                                 <tr style={tblRowStyle}>
