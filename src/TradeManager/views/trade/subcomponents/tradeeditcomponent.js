@@ -52,7 +52,31 @@ export default class TradeEditComponent extends Component {
            this.cpItems.push(<MenuItem value={cp.code} key={cp.code} primaryText={cp.description} />)
         });
 
+        this.tickers = {};
+        Object.keys(this.props.refdata.commodities).forEach(key => {
+            let commodity = this.props.refdata.commodities[key];
+            this.tickers[key] = {code:key,name:commodity.description,date:"2017-12-21T13:37:08.605Z",unit:"1 oz",currency:"USD",price:0};
+        });
+
     }
+
+	componentDidMount(){
+        this.props.eventHandler.subscribeForMarketDataEvents("trader",
+            this.marketDataEventCallback, this);
+    }
+
+    componentWillUnmount() {
+        this.props.eventHandler.unsubscribeForMarketDataEvents("trader");
+    }
+
+    marketDataEventCallback(data, source) {
+        let marketDataInJSON = JSON.parse(data);
+        let np = parseFloat(marketDataInJSON.price);
+        if(source.tickers[marketDataInJSON.code] !==undefined) {
+            source.tickers[marketDataInJSON.code].price = np;
+        } 
+    }
+    
 
     disableWeekends(date) {
         return date.getDay() === 0 || date.getDay() === 6;
@@ -83,6 +107,26 @@ export default class TradeEditComponent extends Component {
         
         if(parseInt(qValue) <= 0) {
             alert("Quantity should be greater than 0");
+            return false;
+        }
+
+        // check trade price is above the current price
+        let commodity = this.refs.ddlCommodity.state.value;
+        let side = this.refs.rbBuySell.state.selected;
+        let priceObj = this.tickers[commodity];
+
+        if(priceObj!==undefined) {
+            let currentPrice = this.tickers[commodity].price;
+            if(side==='Buy' && parseFloat(priceValue) > parseFloat(currentPrice)) {
+                alert(`You are buying at a price more than the prevailing price - ${currentPrice}`);
+                return false;
+            }
+            if(side==='Sell' && parseFloat(priceValue) < parseFloat(currentPrice)) {
+                alert(`You are selling at a price less than the prevailing price - ${currentPrice}`);
+                return false;
+            }
+        } else {
+            alert(`Latest price not available for commodity: ${commodity}, cannot trade`);
             return false;
         }
 

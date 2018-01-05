@@ -9,7 +9,7 @@ function loadCommodities() {
     let specificQueryService = myprocess.env.REFDATA_COMMODITY_SERVICE;
     let url = apiGatewayServiceUrl+queryServiceBaseUrl+specificQueryService;
         
-	return fetch(url)
+	return fetch(url, { credentials: 'same-origin' })
 		.then(response => response.json()).then(json => json.commodities)
 }
 
@@ -17,7 +17,7 @@ function loadLocations() {
     let specificQueryService = myprocess.env.REFDATA_LOCATION_SERVICE;
     let url = apiGatewayServiceUrl+queryServiceBaseUrl+specificQueryService;
         
-	return fetch(url)
+	return fetch(url, { credentials: 'same-origin' })
 		.then(response => response.json()).then(json => json.locations)
 }
 
@@ -25,7 +25,7 @@ function loadCounterparties() {
     let specificQueryService = myprocess.env.REFDATA_CP_SERVICE;
     let url = apiGatewayServiceUrl+queryServiceBaseUrl+specificQueryService;
         
-	return fetch(url)
+	return fetch(url, { credentials: 'same-origin' })
 		.then(response => response.json()).then(json => json.counterparties)
 }
 

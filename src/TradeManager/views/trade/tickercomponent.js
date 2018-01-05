@@ -17,12 +17,12 @@ class TickerComponent extends Component {
     }
 
 	componentDidMount(){
-        this.props.eventHandler.subscribeForMarketDataEvents(
+        this.props.eventHandler.subscribeForMarketDataEvents("ticker",
             this.marketDataEventCallback, this);
     }
 
     componentWillUnmount() {
-        this.props.eventHandler.unsubscribeForMarketDataEvents();
+        this.props.eventHandler.unsubscribeForMarketDataEvents("ticker");
     }
 
     marketDataEventCallback(data, source) {

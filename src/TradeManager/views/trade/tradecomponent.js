@@ -68,7 +68,7 @@ class TradeComponent extends Component {
  
     render() {
         let {tradeBody} = (this.state.isNewTrade) ? {tradeBody:{}} : this.props.activeTrade; 
-        let {createNewTrade, updateTrade, deleteTrade} = this.props;                
+        let {createNewTrade, updateTrade, deleteTrade, eventHandler} = this.props;                
 
         if(!tradeBody.tradeId) {
             tradeBody = this.fillDefaultValues();
@@ -100,7 +100,7 @@ class TradeComponent extends Component {
                             handlePostSaveClick={this.handlePostSaveClick.bind(this)}
                             handleCancelClick={this.handleCancelClick.bind(this)}
                             refdata = {this.props.refdata} 
-                            {...{tradeBody, createNewTrade, updateTrade, deleteTrade}} />
+                            {...{tradeBody, createNewTrade, updateTrade, deleteTrade, eventHandler}} />
                 </div>
             </div>
         );

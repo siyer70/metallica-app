@@ -59,7 +59,7 @@ export default class TradeContainer extends Component {
                         </td>
                         <td width="35%" height="60%" style={{verticalAlign:'top'}}>
                             <TradeComponent ref="tradeComponent" {...{createNewTrade, updateTrade, 
-                                deleteTrade, activeTrade, refdata}}
+                                deleteTrade, activeTrade, refdata, eventHandler}}
                                 handlePostEditClick={this.handlePostEditClick.bind(this)}
                                 handlePostSaveClick={this.handlePostSaveClick.bind(this)}
                                 handleCancelClick={this.handleCancelClick.bind(this)}

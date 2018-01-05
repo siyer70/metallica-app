@@ -12,7 +12,8 @@ function createNewTrade(tradeBody) {
         headers : {
             'content-type' : 'application/json'
         },
-        body : JSON.stringify(tradeBody)
+		body : JSON.stringify(tradeBody), 
+		credentials: 'same-origin'
     })
     .then(response => response.json());
 }
@@ -25,7 +26,8 @@ function updateTrade(tradeId, tradeBody){
 		headers : {
 			'content-type' : 'application/json'
 		},
-		body : JSON.stringify(tradeBody)
+		body : JSON.stringify(tradeBody),
+		credentials: 'same-origin'
 	})
 	.then(response => response.json());
 }
@@ -34,7 +36,8 @@ function deleteTrade(tradeId){
     let tradeDeleteUrl = "/"+tradeId;
     let url = apiGatewayServiceUrl+tradeCommandServiceBaseUrl+tradeCommandServicePrefix+tradeDeleteUrl;
 	return fetch(url, {
-		method : 'DELETE'
+		method : 'DELETE',
+		credentials: 'same-origin'
 	})
 	.then(response => response.json());
 }

@@ -9,7 +9,7 @@ console.log("Gateway url is:", apiGatewayServiceUrl);
 function loadTrades() {
     let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix;
         
-	return fetch(url)
+	return fetch(url, { credentials: 'same-origin' })
 		.then(response => response.json())
 }
 
@@ -17,7 +17,7 @@ function queryTrades(queryParamsInRESTFormat) {
     let queryUrl = "/" + queryParamsInRESTFormat;
     let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix+queryUrl;
         
-	return fetch(url)
+	return fetch(url, { credentials: 'same-origin' })
 		.then(response => response.json())
 }
 
@@ -25,7 +25,7 @@ function queryTrade(tradeId) {
     let queryUrl = "/" + tradeId;
     let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix+queryUrl;
         
-	return fetch(url)
+	return fetch(url, { credentials: 'same-origin' })
 		.then(response => response.json())
 }
 
