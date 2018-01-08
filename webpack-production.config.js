@@ -44,6 +44,7 @@ const config = {
           cacheDirectory: true,
         },
       },
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
@@ -60,6 +61,12 @@ const config = {
       }
     ],
   },
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 };
 
 module.exports = config;

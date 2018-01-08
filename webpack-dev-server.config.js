@@ -19,7 +19,10 @@ const config = {
     inline: true,
     port: 3000, // Port Number
     host: 'localhost', // Change to '0.0.0.0' for external facing server
-    historyApiFallback: true
+    historyApiFallback: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }    
   },
   devtool: 'eval',
   output: {
@@ -44,6 +47,7 @@ const config = {
           cacheDirectory: true,
         },
       },
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.css$/,
         loader: combineLoaders([
@@ -60,6 +64,12 @@ const config = {
       },
     ],
   },
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 };
 
 module.exports = config;

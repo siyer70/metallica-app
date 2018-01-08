@@ -6,20 +6,22 @@ import { connect} from 'react-redux'
 class PrivateRouteContainer extends Component {
     render() {
         const {
-        isAuthenticated,
-        component: Component,
-        ...props
-    } = this.props
+            isAuthenticated,
+            component: Comp,
+            ...props
+        } = this.props
+        console.log("Authenticated:", isAuthenticated);
+        console.log("User Details:", window.userDetails);
   
         return (
             <Route
                 {...props}
                 render={props =>
                 isAuthenticated
-                    ? <Component {...props} />
+                    ? <Comp {...props} />
                     : (
                     <Redirect to={{
-                    pathname: '/login',
+                    pathname: '/signin',
                     state: { from: props.location }
                     }} />
                 )

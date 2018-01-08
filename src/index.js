@@ -51,7 +51,8 @@ render(
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
                     <PrivateRoute exact path="/" component={TradeManager}/>
-                    <Route path="/login" component={Login}/>
+                    <PrivateRoute path="/trade" component={TradeManager}/>
+                    <Route path="/signin" component={Login}/>
                     <PrivateRoute path="/profile" component={UserProfile}/>
                 </div>
             </MuiThemeProvider>

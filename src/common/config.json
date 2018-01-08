@@ -24,8 +24,8 @@
     "REFDATA_CP_SERVICE" : "/counterparties"
   },
   "production" : {
-    "NOTIFICATION_SERVER_URL" : "http://metallica.southindia.cloudapp.azure.com:3050",
-    "API_GATEWAY_URL" : "http://metallica.southindia.cloudapp.azure.com",
+    "NOTIFICATION_SERVER_URL" : "http://localhost:3050",
+    "API_GATEWAY_URL" : "http://localhost:8765",
     "TRADE_QUERY_SERVICE_BASE_URL" : "/services/tradeservice",
     "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
     "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",

@@ -3,6 +3,7 @@
  * which incorporates components provided by Material-UI.
  */
 import React, {Component} from 'react';
+import { withRouter } from 'react-router'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -36,6 +37,7 @@ class TradeManager extends Component {
   }
 
   render() {
+    console.log("Trade component called");
     return (
         <div style={styles.container}>
           <StatusIndicator />
@@ -47,7 +49,7 @@ class TradeManager extends Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
 	function mapStateToProps(state){
 		return {
       trades : state.trades,
@@ -58,5 +60,5 @@ export default connect(
 	function mapDispatchToProps(dispatch){
 		return bindActionCreators(tradeActions, dispatch);
 	}
-)(TradeManager);
+)(TradeManager));
 

@@ -1,0 +1,14 @@
+{
+  "production" : {
+    "NOTIFICATION_SERVER_URL" : "http://metallica.southindia.cloudapp.azure.com:3050",
+    "API_GATEWAY_URL" : "http://metallica.southindia.cloudapp.azure.com",
+    "TRADE_QUERY_SERVICE_BASE_URL" : "/services/tradeservice",
+    "TRADE_QUERY_SERVICE_PREFIX" : "/trades",
+    "TRADE_COMMAND_SERVICE_BASE_URL" : "/services/tradeservice",
+    "TRADE_COMMAND_SERVICE_PREFIX" : "/trades",
+    "REFDATA_QUERY_SERVICE_BASE_URL" : "/services/refdataservice",
+    "REFDATA_COMMODITY_SERVICE" : "/commodities",
+    "REFDATA_LOCATION_SERVICE" : "/locations",
+    "REFDATA_CP_SERVICE" : "/counterparties"
+  }
+}

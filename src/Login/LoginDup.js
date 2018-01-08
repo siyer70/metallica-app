@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { withRouter } from 'react-router'
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -29,21 +28,71 @@ class Login extends Component {
         this.setState({password:event.target.value});
     }
 
-    postObtainingUserDetailsCallBack(err, userDetails, source) {
-        if(!err) {
-            // alert(JSON.stringify(userDetails));
-            window.userDetails = userDetails;
-            // whatever you want to do with userdetails
-            this.props.login();
-        }
-    }
-    
-
     handleLoginClick(event) {
-        // this.props.login();
-        obtainTokenAndUserDetails(this.state.userId, this.state.password, this,
-            this.postObtainingUserDetailsCallBack.bind(this)); 
+        obtainTokenAndUserDetails(this.state.userId, this.state.password, this, 
+            (err, userDetails, source) => {
+                if(!err) {
+                    alert(JSON.stringify(userDetails));
+                    // whatever you want to do with userdetails
+                    source.props.login();
+                }
+        });
+
+        // var hdr = {
+        //     'content-type' : 'application/x-www-form-urlencoded',
+        //     'Authorization' : 'Basic ' + base64EndcodedId
+        // };
+        // console.log(hdr); 
+
+        // var details = {
+        //     'userName': 'test@gmail.com',
+        //     'password': 'Password!',
+        //     'grant_type': 'password'
+        // };
+        
+        // var formBody = [];
+        // for (var property in formData) {
+        //   var encodedKey = encodeURIComponent(property);
+        //   var encodedValue = encodeURIComponent(formData[property]);
+        //   formBody.push(encodedKey + "=" + encodedValue);
+        // }
+        // formBody = formBody.join("&");
+        // console.log(formBody);
+        // let data = '';
+        // fetch(url, {
+        //   method: 'POST',
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        //     'Authorization' : 'Basic ' + base64EndcodedId
+        //   },
+        //   body: formBody
+        // })        
+        // .then(response => {
+        //     console.log(response);
+        //     response.body.on('data', (chunk) => {
+        //         data += chunk;
+        //     });
+        //     response.body.on('end', )
+        //     alert(response.body.toString());
+        //     alert(response.status);
+        // })
+        // .catch((err) => alert("An error occurred while logging in: ", err));
+
     }
+
+    // handleFBClick(event) {
+    //     fetch("/login", { credentials: 'same-origin' })
+    //     .then(response => {
+    //         console.log("routine called");
+    //         console.log(response);
+    //         this.props.login();
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //         alert("An internal error occurred while logging in:", err);
+    //     });
+    // }
 
     render() {
         let contentStyle = {fontSize: "14px"};
@@ -97,14 +146,11 @@ class Login extends Component {
     
 }
 
-export default withRouter(connect(state => ({
+export default connect(state => ({
     isAuthenticated: state.authReducer.isAuthenticated
 }), dispatch => ({
     login: () => {
-      Promise.resolve(dispatch(authSuccess()))
-      .then(() => {
-        console.log("dispatched auth success event");
-        dispatch(push('/#/trade'));
-      });
+      dispatch(authSuccess());
+      dispatch(push('/#/trade'));
     }
-}))(Login));
+}))(Login);
