@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { connect} from 'react-redux'
+import { withRouter } from 'react-router'
 
 class PrivateRouteContainer extends Component {
     render() {
@@ -10,8 +11,6 @@ class PrivateRouteContainer extends Component {
             component: Comp,
             ...props
         } = this.props
-        console.log("Authenticated:", isAuthenticated);
-        console.log("User Details:", window.userDetails);
   
         return (
             <Route
@@ -31,8 +30,8 @@ class PrivateRouteContainer extends Component {
     }
 }
   
-const PrivateRoute = connect(state => ({
+const PrivateRoute = withRouter(connect(state => ({
     isAuthenticated: state.authReducer.isAuthenticated
-}))(PrivateRouteContainer)
+}))(PrivateRouteContainer));
 
 export default PrivateRoute;

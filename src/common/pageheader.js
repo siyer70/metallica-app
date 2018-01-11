@@ -14,10 +14,11 @@ import {authFail} from './../Login/actions';
 class PageHeader extends Component {
     constructor(properties) {
         super(properties);
+        let user = (window.userDetails)?window.userDetails.username:"Unknown";
         this.state = {
             open : false,
             version : "1.0",
-            currentUser : "schandrasekhar@sapient.com"
+            currentUser : user
         };
     }
 

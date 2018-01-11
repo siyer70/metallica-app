@@ -5,16 +5,17 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 
-import PageHeader from './../common/header';
+import PageHeader from './../common/pageheader';
 import StatusIndicator from './../StatusIndicator/StatusIndicator';
 import { connect, Provider } from 'react-redux';
 import { push } from 'react-router-redux';
 import {authSuccess} from './actions';
 import obtainTokenAndUserDetails from './actions/obtainTokenAndUserDetails';
+import myprocess from './../common/config';
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             userId : 'siyer70@gmail.com',
             password : 'metallica'
@@ -31,16 +32,14 @@ class Login extends Component {
 
     postObtainingUserDetailsCallBack(err, userDetails, source) {
         if(!err) {
-            // alert(JSON.stringify(userDetails));
-            window.userDetails = userDetails;
             // whatever you want to do with userdetails
+            window.userDetails = userDetails;
             this.props.login();
         }
     }
     
 
     handleLoginClick(event) {
-        // this.props.login();
         obtainTokenAndUserDetails(this.state.userId, this.state.password, this,
             this.postObtainingUserDetailsCallBack.bind(this)); 
     }
@@ -51,8 +50,6 @@ class Login extends Component {
         let textStyle = {paddingBottom:"20px"};
         return (
             <div>
-                <StatusIndicator />
-                <PageHeader />
                 <br/>
                 <br/>
                 <h2>Metallica Login</h2>
@@ -101,10 +98,7 @@ export default withRouter(connect(state => ({
     isAuthenticated: state.authReducer.isAuthenticated
 }), dispatch => ({
     login: () => {
-      Promise.resolve(dispatch(authSuccess()))
-      .then(() => {
-        console.log("dispatched auth success event");
-        dispatch(push('/#/trade'));
-      });
+        dispatch(authSuccess());
+        dispatch(push('/trade'));
     }
 }))(Login));
