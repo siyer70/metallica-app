@@ -1,8 +1,9 @@
-function authSuccesss(){
+function authSuccesss(userDetails){
 	return function(dispatch){
 		console.log("dispatching auth success event...");
 		dispatch({
-			type : 'AUTH_SUCCESS'
+			type : 'AUTH_SUCCESS',
+			payload : {userDetails}
 		});
 	}
 }

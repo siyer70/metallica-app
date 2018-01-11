@@ -32,9 +32,13 @@ class Login extends Component {
 
     postObtainingUserDetailsCallBack(err, userDetails, source) {
         if(!err) {
-            // whatever you want to do with userdetails
-            window.userDetails = userDetails;
-            this.props.login();
+            let apiGatewayServiceUrl = myprocess.env.API_GATEWAY_URL;
+            let usercookieinfo = "isAuthenticated=true;username=" + userDetails.username +
+                    ";access_token=" + 
+                    userDetails.access_token + ";path=/";
+            console.log("Info for cookie to be created is:", usercookieinfo);
+            document.usercookie = usercookieinfo;
+            this.props.login(userDetails);
         }
     }
     
@@ -97,8 +101,8 @@ class Login extends Component {
 export default withRouter(connect(state => ({
     isAuthenticated: state.authReducer.isAuthenticated
 }), dispatch => ({
-    login: () => {
-        dispatch(authSuccess());
+    login: (userDetails) => {
+        dispatch(authSuccess(userDetails));
         dispatch(push('/trade'));
     }
 }))(Login));

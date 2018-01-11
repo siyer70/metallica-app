@@ -1,6 +1,7 @@
 
 const initialState = {
-    isAuthenticated: false
+    isAuthenticated: false,
+    userDetails: {}
   }
   
 const authReducer = (state = initialState , action) => {
@@ -8,12 +9,14 @@ const authReducer = (state = initialState , action) => {
         case 'AUTH_SUCCESS':
         return {
             ...state,
-            isAuthenticated: true
+            isAuthenticated: true,
+            userDetails: action.payload.userDetails
         }
         case 'AUTH_FAIL':
         return {
             ...state,
-            isAuthenticated: false
+            isAuthenticated: false,
+            userDetails: {}
         }
         default:
         return state

@@ -18,7 +18,6 @@ class PageHeader extends Component {
         this.state = {
             open : false,
             version : "1.0",
-            currentUser : user
         };
     }
 
@@ -43,7 +42,8 @@ class PageHeader extends Component {
     }
     
     render() {
-        let {isAuthenticated} = this.props;
+        let {isAuthenticated, userDetails} = this.props;
+        let username = (userDetails && userDetails.username)?userDetails.username:"Unknown";
         let title = `Metallica Application Version ${this.state.version} - Environment: ${process.env.NODE_ENV || 'development'}`;
         let containerStyle = {fontSize: "16px"};
         let titleStyle = {fontSize: "16px"};
@@ -68,7 +68,7 @@ class PageHeader extends Component {
                     iconElementRight={
                         (isAuthenticated) ?
                         <span>
-                            <span style={contentStyle}>User: {this.state.currentUser}</span>
+                            <span style={contentStyle}>User: {username}</span>
                             <IconMenu
                                 iconButtonElement={
                                     <IconButton iconStyle={styles.mediumIcon}>
@@ -97,7 +97,7 @@ class PageHeader extends Component {
 }
 
 export default connect(state => ({
-    isAuthenticated: state.authReducer.isAuthenticated
+    ...state.authReducer
 }), dispatch => ({
     logout: () => {
       dispatch(authFail());
