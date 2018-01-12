@@ -33,11 +33,7 @@ class Login extends Component {
     postObtainingUserDetailsCallBack(err, userDetails, source) {
         if(!err) {
             let apiGatewayServiceUrl = myprocess.env.API_GATEWAY_URL;
-            let usercookieinfo = "isAuthenticated=true;username=" + userDetails.username +
-                    ";access_token=" + 
-                    userDetails.access_token + ";path=/";
-            console.log("Info for cookie to be created is:", usercookieinfo);
-            document.usercookie = usercookieinfo;
+            localStorage.setItem("userDetails", JSON.stringify(userDetails));
             this.props.login(userDetails);
         }
     }

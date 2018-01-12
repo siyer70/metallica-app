@@ -43,6 +43,29 @@ class SearchComponent extends Component {
                this.cpItems.push(<MenuItem value={cp.code} key={cp.code} primaryText={cp.description} />)
         });
 
+        this.state = {
+            fromDate: new Date(),
+            toDate: new Date(),
+            buyChecked: true,
+            sellChecked: true
+        };
+
+    }
+
+    onFromDateChange(none, dateObj) {
+        this.setState({fromDate: dateObj});
+    }
+
+    onToDateChange(none, dateObj) {
+        this.setState({toDate: dateObj});
+    }
+
+    onBuyClick(event, isInputChecked) {
+        this.setState({buyChecked: isInputChecked});
+    }
+
+    onSellClick(event, isInputChecked) {
+        this.setState({sellChecked: isInputChecked});
     }
 
 	componentDidMount(){
@@ -66,7 +89,7 @@ class SearchComponent extends Component {
     }
 
     queryTradesBasedOnCurrentCriteria() {
-        let {loadTrades, queryTrades} = this.props;
+        let {queryTrades} = this.props;
 
         let dtFrom = moment(this.refs.dtTradeFrom.refs.input.getValue(), 
                     "DD/MM/YYYY"); 
@@ -144,7 +167,8 @@ class SearchComponent extends Component {
                                                         month: 'numeric',
                                                         year: 'numeric',
                                                     }).format}
-                                                    defaultDate = {new Date()}
+                                                    value = {this.state.fromDate}
+                                                    onChange = {this.onFromDateChange.bind(this)}
                                                 />
                                             </td>
                                             <td>
@@ -163,7 +187,8 @@ class SearchComponent extends Component {
                                                         month: 'numeric',
                                                         year: 'numeric',
                                                     }).format}
-                                                    defaultDate = {new Date()}
+                                                    value = {this.state.toDate}
+                                                    onChange = {this.onToDateChange.bind(this)}
                                                 />
                                             </td>
                                         </tr>
@@ -178,10 +203,10 @@ class SearchComponent extends Component {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <Checkbox style={{color:"#F5F5F5"}} labelStyle = {contentStyle} ref="chkBuy" defaultChecked={true} label="Buy" style={{marginRight:15}} />
+                                                <Checkbox style={{color:"#F5F5F5"}} labelStyle = {contentStyle} ref="chkBuy" checked={this.state.buyChecked} onCheck={this.onBuyClick.bind(this)} label="Buy" style={{marginRight:15}} />
                                             </td>
                                             <td>
-                                                <Checkbox labelStyle = {contentStyle} ref="chkSell" defaultChecked={true} label="Sell" style={{marginRight:15}} />
+                                                <Checkbox labelStyle = {contentStyle} ref="chkSell" checked={this.state.sellChecked} onCheck={this.onSellClick.bind(this)} label="Sell" style={{marginRight:15}} />
                                             </td>
                                         </tr>
                                     </tbody>

@@ -96,9 +96,7 @@ class PageHeader extends Component {
 
 }
 
-export default connect(state => ({
-    ...state.authReducer
-}), dispatch => ({
+export default connect(null, dispatch => ({
     logout: () => {
       dispatch(authFail());
       dispatch(push('/#/login'));

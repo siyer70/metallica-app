@@ -65,7 +65,7 @@ export default class FeatureTabs extends Component {
                             <Divider />
                             <SearchComponent ref="searchComponent" 
                                 key={'searchwithrefdata:'+this.state.refdataLoaded} 
-                                loadTrades={loadTrades} queryTrades={queryTrades} 
+                                queryTrades={queryTrades} 
                                 refdata={this.refdata} />
                             <TradeContainer ref="tradeContainer" 
                                 key={'containerwithrefdata:'+this.state.refdataLoaded} 

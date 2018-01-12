@@ -10,13 +10,7 @@ import createHistory from 'history/createBrowserHistory'
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import PageHeader from './common/pageheader';
-import StatusIndicator from './StatusIndicator/StatusIndicator';
-import PrivateRoute from './custom-components/privateroute';
-import Login from './Login/Login'; 
-import TradeManager from './TradeManager/TradeManager'; 
-import UserProfile from './UserProfile/UserProfile';
-
+import MainApp from './mainapp';
 import {tradesReducer, activeTradeReducer, statusReducer, authReducer} from './reducers';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -45,50 +39,14 @@ const middlewares = [thunk, routermiddleware];
 const appStore = createStore(allReducers, applyMiddleware(...middlewares));
 const muiTheme = getMuiTheme(lightBaseTheme);
 
-class BaseLayout extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    // getChildContext() {
-    //     return {cookiejar: this.cookiejar}
-    // }    
-
-    render() {
-        return (
-            <div className="base">
-                <header>
-                    <StatusIndicator />
-                    <PageHeader />
-                </header>
-                <main>
-                    <PrivateRoute exact path="/" component={TradeManager}/>
-                    <PrivateRoute path="/trade" component={TradeManager}/>
-                    <Route path="/signin" component={Login}/>
-                    <PrivateRoute path="/profile" component={UserProfile}/>
-                </main>
-                <footer>
-                    <p style={{fontSize: "12px"}}>Copyright &copy; 2018 XYZ Inc.</p>
-                </footer>
-            </div>
-        );
-    }
-}  
-
-// BaseLayout.childContextTypes = {
-//     cookiejar: React.PropTypes.object
-// }
-
-
 // Render the main app react component into the app div.
 render(
     <Provider store={appStore}>
         <ConnectedRouter history={history}>
             <MuiThemeProvider muiTheme={muiTheme}>
-                <BaseLayout />
+                <MainApp />
             </MuiThemeProvider>
         </ConnectedRouter>
     </Provider>, 
     document.getElementById('app')
 );
-

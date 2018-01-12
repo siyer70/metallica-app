@@ -5,19 +5,6 @@ import { connect} from 'react-redux'
 import { withRouter } from 'react-router'
 
 class PrivateRouteContainer extends Component {
-    componentDidMount(){
-        console.log("User cookie is: ", document.usercookie);
-        // if(document.usercookie!==undefined) {
-        //     let details = document.usercookie.split(';');
-        //     let isAuthenticated = details[0].split('=')[1]==='true';
-        //     console.log("User Authenticated => ", isAuthenticated)
-        //     if(isAuthenticated===true) {
-        //     }
-
-        // }
-
-    }
-
     render() {
         const {
             isAuthenticated,
@@ -32,11 +19,11 @@ class PrivateRouteContainer extends Component {
                 isAuthenticated
                     ? <Comp {...props} />
                     : (
-                    <Redirect to={{
-                    pathname: '/signin',
-                    state: { from: props.location }
-                    }} />
-                )
+                        <Redirect to={{
+                        pathname: '/signin',
+                        state: { from: props.location }
+                        }} />
+                    )
                 }
             />
         )
