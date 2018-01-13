@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router'
+import { connect, Provider } from 'react-redux';
+import { push } from 'react-router-redux';
+
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 
-import PageHeader from './../common/pageheader';
-import StatusIndicator from './../StatusIndicator/StatusIndicator';
-import { connect, Provider } from 'react-redux';
-import { push } from 'react-router-redux';
 import {authSuccess} from './actions';
+
 import obtainTokenAndUserDetails from './actions/obtainTokenAndUserDetails';
 import myprocess from './../common/config';
 

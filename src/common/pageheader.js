@@ -9,7 +9,7 @@ import verticalAlignCenter from 'material-ui/svg-icons/editor/vertical-align-cen
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import {authFail, logout} from './../Login/actions';
+import {authSuccess, authFail, logout} from './../Login/actions';
 
 class PageHeader extends Component {
     constructor(properties) {
@@ -33,7 +33,7 @@ class PageHeader extends Component {
     }
 
     handleProfile(event) {
-        alert('Feature under construction');
+        this.props.gotoProfilePage(this.props.userDetails);
     }
 
     handleLogout(event) {
@@ -109,5 +109,10 @@ export default connect(state => ({
       dispatch(authFail());
       console.log("Calling Login screen...");
       dispatch(push('/#/login'));
+    },
+    gotoProfilePage: (userDetails) => {
+        console.log("Calling profile screen...");
+        // dispatch(authSuccess(userDetails));
+        dispatch(push('/profile'));
     }
 }))(PageHeader);
