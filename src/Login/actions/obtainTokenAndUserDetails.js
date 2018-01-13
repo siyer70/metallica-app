@@ -34,8 +34,7 @@ function obtainTokenAndUserDetails(userId, password, source, cb){
             cb(json.error_description, null);
             return;
         }
-        console.log("Access Token:", json.access_token);
-        console.log(json);
+        console.log("Access Token:", json);
         getUserDetails(json, cb, source);
         return; 
     });

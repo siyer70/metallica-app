@@ -1,4 +1,6 @@
 import myprocess from './../../common/config';
+import fetchUsingToken from './fetchusingtoken';
+
 
 let apiGatewayServiceUrl = myprocess.env.API_GATEWAY_URL;
 let tradeQueryServiceBaseUrl = myprocess.env.TRADE_QUERY_SERVICE_BASE_URL;
@@ -9,23 +11,24 @@ console.log("Gateway url is:", apiGatewayServiceUrl);
 function loadTrades() {
     let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix;
         
-	return fetch(url, { credentials: 'same-origin' })
+	return fetchUsingToken(url)
 		.then(response => response.json())
 }
 
 function queryTrades(queryParamsInRESTFormat) {
     let queryUrl = "/" + queryParamsInRESTFormat;
-    let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix+queryUrl;
-        
-	return fetch(url, { credentials: 'same-origin' })
+	let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix+queryUrl;
+	
+	return fetchUsingToken(url)
 		.then(response => response.json())
 }
+
 
 function queryTrade(tradeId) {
     let queryUrl = "/" + tradeId;
     let url = apiGatewayServiceUrl+tradeQueryServiceBaseUrl+tradeQueryServicePrefix+queryUrl;
         
-	return fetch(url, { credentials: 'same-origin' })
+	return fetchUsingToken(url)
 		.then(response => response.json())
 }
 

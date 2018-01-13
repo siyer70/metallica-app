@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import {authSuccess} from './Login/actions';
+import {authSuccess, authFail} from './Login/actions';
 
 import PageHeader from './common/pageheader';
 import StatusIndicator from './StatusIndicator/StatusIndicator';
@@ -15,19 +15,16 @@ import UserProfile from './UserProfile/UserProfile';
 class MainApp extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loggedIn : false,
-            userDetails: undefined
-        }
     }
 
 	componentWillMount(){
         let userDetailsInStr = localStorage.getItem("userDetails");
-        if(userDetailsInStr) {
-            console.log("User detail is:", userDetailsInStr);
+        console.log("Stored user details from MainApp: ", userDetailsInStr);
+        if(userDetailsInStr!=="undefined") {
             let userDetails = JSON.parse(userDetailsInStr);
-            this.props.autoLogin(authSuccess(userDetails));
-            this.setState({loggedIn: true, userDetails});
+            this.props.autoLogin(userDetails);
+        } else {
+            this.props.sendNotLogggedInMessage();
         }
     }
 
@@ -36,11 +33,12 @@ class MainApp extends Component {
     // }    
 
     render() {
+        let {isAuthenticated, userDetails} = this.props;
         return (
             <div className="base">
                 <header>
                     <StatusIndicator />
-                    <PageHeader isAuthenticated={this.state.loggedIn} userDetails={this.state.userDetails}/>
+                    <PageHeader />
                 </header>
                 <main>
                     <PrivateRoute exact path="/" component={TradeManager}/>
@@ -63,5 +61,8 @@ class MainApp extends Component {
 export default withRouter(connect(null, dispatch => ({
     autoLogin: (userDetails) => {
         dispatch(authSuccess(userDetails));
+    },
+    sendNotLogggedInMessage: () => {
+        dispatch(authFail());
     }
 }))(MainApp));

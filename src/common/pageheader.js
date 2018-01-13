@@ -9,7 +9,7 @@ import verticalAlignCenter from 'material-ui/svg-icons/editor/vertical-align-cen
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import {authFail} from './../Login/actions';
+import {authFail, logout} from './../Login/actions';
 
 class PageHeader extends Component {
     constructor(properties) {
@@ -38,7 +38,15 @@ class PageHeader extends Component {
     }
 
     handleLogout(event) {
-        // alert('Logging out');
+        let {userDetails} = this.props;
+        // alert("Logging out with token:" + userDetails.access_token);
+        console.log("Logging out with token:", userDetails.access_token);
+        logout(userDetails.access_token, this, this.logoutCallBack.bind(this));
+    }
+
+    logoutCallBack(source) {
+        localStorage.setItem("userDetails", undefined);
+        this.props.logout();
     }
     
     render() {
@@ -79,7 +87,7 @@ class PageHeader extends Component {
                                 targetOrigin={{horizontal: 'right', vertical: 'center'}}
                             >
                                 <MenuItem onClick={this.handleProfile.bind(this)} primaryText="Profile" />
-                                <MenuItem onClick={this.props.logout} primaryText="Sign out" />
+                                <MenuItem onClick={this.handleLogout.bind(this)} primaryText="Sign out" />
                             </IconMenu>                            
                         </span>
                         : <span style={contentStyle}>Not Logged in</span>
@@ -96,9 +104,13 @@ class PageHeader extends Component {
 
 }
 
-export default connect(null, dispatch => ({
+export default connect(state => ({
+    ...state.authReducer
+}), dispatch => ({
     logout: () => {
+      console.log("Dispatching logout (authFail) message...");
       dispatch(authFail());
+      console.log("Calling Login screen...");
       dispatch(push('/#/login'));
     }
 }))(PageHeader);
