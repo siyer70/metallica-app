@@ -16,7 +16,7 @@ class PageHeader extends Component {
         super(properties);
         this.state = {
             open : false,
-            version : "1.0",
+            version : APPVERSION,
         };
     }
 

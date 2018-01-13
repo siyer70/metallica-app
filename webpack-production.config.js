@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const pkg = require('./package.json');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const combineLoaders = require('webpack-combine-loaders');
@@ -23,7 +24,8 @@ const config = {
     new webpack.DefinePlugin({
       'process.env':{
         'NODE_ENV': JSON.stringify('production')
-      }
+      },
+      'APPVERSION': JSON.stringify(pkg.version)
     }),
     // Minify the bundle
     new webpack.optimize.UglifyJsPlugin({

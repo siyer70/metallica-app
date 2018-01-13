@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const pkg = require('./package.json');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const combineLoaders = require('webpack-combine-loaders');
 
@@ -30,6 +31,10 @@ const config = {
     filename: 'app.js',
   },
   plugins: [
+    // Define constants
+    new webpack.DefinePlugin({
+      'APPVERSION': JSON.stringify(pkg.version)
+    }),
     // Enables Hot Modules Replacement
     new webpack.HotModuleReplacementPlugin(),
     // Moves files
