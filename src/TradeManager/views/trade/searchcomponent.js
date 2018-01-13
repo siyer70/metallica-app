@@ -127,8 +127,54 @@ class SearchComponent extends Component {
         queryTrades({queryForAPICall : qp, queryJson : queryCriteriaAsJSON});
     }
 
-    handleClick(event) {
+    handleSearchClick(event) {
         this.queryTradesBasedOnCurrentCriteria();
+    }
+
+    handleClearClick(event) {
+        let {queryTrades} = this.props;
+
+        this.refs.ddlCommodity.setState({value:'ALL'});
+        this.refs.ddlCP.setState({value:'ALL'});
+        this.refs.ddlLocation.setState({value:'ALL'});
+        this.setState({fromDate: new Date(), toDate: new Date(), buyChecked:true, sellChecked:true});
+
+        // current values will only be refreshed after this function call completes, so cannot 
+        // call queryTradesBasedOnCurrentCriteria directly as it picks the value form components
+        let currentDate = new Date();
+        currentDate.setHours(0,0,0,0);
+        let dtFrom = moment(currentDate, 
+                    "DD/MM/YYYY"); 
+        let dtTo = moment(currentDate, 
+                    "DD/MM/YYYY");
+        
+        let allValues = "ALL";
+        let dtRange = [
+            dtFrom.format("YYYYMMDD"),
+            dtTo.format("YYYYMMDD")
+        ].join();
+
+        let qp = [
+            dtRange,
+            allValues,
+            allValues,
+            allValues,
+            allValues
+        ].join('/');
+        
+        let queryCriteriaAsJSON = {
+            dateFrom : dtFrom,
+            dateTo : dtTo,
+            commodity : allValues,
+            side : allValues,
+            counterparty : allValues,
+            location : allValues
+        };
+        
+        console.log(qp);
+        console.log(queryCriteriaAsJSON);
+
+        queryTrades({queryForAPICall : qp, queryJson : queryCriteriaAsJSON});
     }
 
     render() {
@@ -222,8 +268,8 @@ class SearchComponent extends Component {
                         <tr>
                             <td colSpan="3"></td>
                             <td colSpan="2" width="100%">
-                                <FlatButton labelStyle = {contentStyle} label="Clear"/>
-                                <FlatButton labelStyle = {contentStyle} label="Search" onClick={this.handleClick.bind(this)}/>
+                                <FlatButton labelStyle = {contentStyle} label="Clear" onClick={this.handleClearClick.bind(this)}/>
+                                <FlatButton labelStyle = {contentStyle} label="Search" onClick={this.handleSearchClick.bind(this)}/>
                             </td>
                         </tr>
                   </tbody>
