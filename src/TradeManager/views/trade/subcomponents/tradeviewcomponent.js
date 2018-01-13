@@ -22,7 +22,7 @@ const TradeViewComponent = ({tradeBody, refdata}) => {
     let title = "Trade ID: " + tradeBody.tradeId;
     let contentStyle = {fontSize: "14px"};
     let titleStyle = {fontSize: "12px", color:"#000000", fontWeight: 'bold'};
-    let rowStyle = {marginBottom:"15px", paddingBottom:"15px"};
+    let rowStyle = {lineHeight:"3"};
     let colStyle = {paddingRight:"15px"};
 
     return (
