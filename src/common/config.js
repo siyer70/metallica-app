@@ -2,16 +2,11 @@ var env = process.env.NODE_ENV || 'development';
 
 const myprocess = {env:{}};
 
-console.log("Environment variable list: ", process.env);
+var config = require('./config.json');
+var envConfig = config[env];
 
-//if(env==='development' || env==='test') {
-  var config = require('./config.json');
-  var envConfig = config[env];
-
-  Object.keys(envConfig).forEach((key) => {
-    myprocess.env[key] = envConfig[key];
-  });
-
-//}
+Object.keys(envConfig).forEach((key) => {
+  myprocess.env[key] = envConfig[key];
+});
 
 export default myprocess;

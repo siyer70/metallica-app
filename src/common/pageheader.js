@@ -39,8 +39,6 @@ class PageHeader extends Component {
 
     handleLogout(event) {
         let {userDetails} = this.props;
-        // alert("Logging out with token:" + userDetails.access_token);
-        console.log("Logging out with token:", userDetails.access_token);
         logout(userDetails.access_token, this, this.logoutCallBack.bind(this));
     }
 

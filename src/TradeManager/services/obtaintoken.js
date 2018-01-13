@@ -1,7 +1,7 @@
-import obtainUserDetails from './obtainstoreduserdetails';
+import obtainStoredUserDetails from './obtainstoreduserdetails';
 
 function obtainToken() {
-    let userDetails = obtainUserDetails();
+    let userDetails = obtainStoredUserDetails();
     return (userDetails && userDetails.access_token) ? userDetails.access_token : "";
 }
 

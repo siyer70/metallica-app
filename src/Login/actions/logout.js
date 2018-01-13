@@ -15,7 +15,6 @@ function logout(token, source, cb){
         var json = (res.body)?JSON.parse(res.body):{};
         if(err) {
             console.log("Error occurred - error is:", err);
-            alert("An error occurred while logging out: message from server: ", err);
             cb(err, null);
             return;
         }

@@ -11,6 +11,8 @@ import PrivateRoute from './custom-components/privateroute';
 import Login from './Login/Login'; 
 import TradeManager from './TradeManager/TradeManager'; 
 import UserProfile from './UserProfile/UserProfile';
+import obtainStoredUserDetails from './TradeManager/services/obtainstoreduserdetails';
+import obtainUserDetails from './Login/actions/obtainUserDetails';
 
 class MainApp extends Component {
     constructor(props) {
@@ -18,11 +20,16 @@ class MainApp extends Component {
     }
 
 	componentWillMount(){
-        let userDetailsInStr = localStorage.getItem("userDetails");
-        console.log("Stored user details from MainApp: ", userDetailsInStr);
-        if(userDetailsInStr!=="undefined") {
-            let userDetails = JSON.parse(userDetailsInStr);
-            this.props.autoLogin(userDetails);
+        let isTokenValid = this.props.isTokenValid;
+        if(isTokenValid) {
+            let userDetails = obtainStoredUserDetails();
+            if(userDetails.username) {
+                let tokenDetails = {...userDetails};
+                delete tokenDetails['username'];
+                this.props.autoLogin(userDetails);
+            } else {
+                this.props.sendNotLogggedInMessage();
+            }
         } else {
             this.props.sendNotLogggedInMessage();
         }

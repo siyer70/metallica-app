@@ -2,8 +2,6 @@ import obtainToken from './obtaintoken';
 
 function fetchUsingToken(url, method, body) {
     let token = obtainToken();
-    console.log("obtained token in fetch function is:");
-    
     let headers = {'Authorization': 'bearer ' + token}; 
     let params = {credentials: 'same-origin'};
 
@@ -20,9 +18,6 @@ function fetchUsingToken(url, method, body) {
     }
 
     params = {headers, ...params};
-
-    console.log(params);
-
     return fetch(url, params);
 }
 
