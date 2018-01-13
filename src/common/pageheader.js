@@ -14,7 +14,6 @@ import {authFail, logout} from './../Login/actions';
 class PageHeader extends Component {
     constructor(properties) {
         super(properties);
-        let user = (window.userDetails)?window.userDetails.username:"Unknown";
         this.state = {
             open : false,
             version : "1.0",

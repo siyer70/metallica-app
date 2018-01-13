@@ -44,7 +44,7 @@ const appStore = createStore(allReducers, applyMiddleware(...middlewares));
 const muiTheme = getMuiTheme(lightBaseTheme);
 
 let userDetails = obtainStoredUserDetails();
-if(userDetails.username) {
+if(userDetails && userDetails.username) {
     let tokenDetails = {...userDetails};
     delete tokenDetails['username'];
 
